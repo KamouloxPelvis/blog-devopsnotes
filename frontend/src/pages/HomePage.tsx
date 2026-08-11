@@ -1,112 +1,478 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useAllArticles } from '../hooks/useAllArticles';
+import { Article } from '../types/articles';
 import '../styles/HomePage.css';
 
+const R2_PUBLIC_URL =
+  process.env.REACT_APP_R2_PUBLIC_URL ?? 'https://resources.devopsnotes.org';
+
 export default function HomePage() {
-  const navigate = useNavigate();
   const [lang, setLang] = useState<'FR' | 'EN'>('FR');
+
+  const { articles, loading } = useAllArticles(1, 3);
 
   const content = {
     FR: {
-      title: "Blog Technique & Hub DevSecOps",
-      subtitle: "Architecture Cloud | Automatisation CI/CD | Sécurité Cloud-native",
-      description1: "est une plateforme full-stack conçue pour démontrer une expertise end-to-end dans le cycle de vie logiciel (SDLC). Plus qu'une simple vitrine, c'est un laboratoire vivant qui a pour vocation d'intégrer les meilleures pratiques d'architecture sécurisée et d'automatisation.",
-      description2: (
-        <>
-          Un projet conçu pour illustrer les meilleures pratiques DevOps et DevSecOps, de la conteneurisation à l'optimisation des performances CDN, avec des technos légères mais puissantes et robustes pour une application micro-services.
-        </>
-      ),      
-      notice: "Des opérations de maintenance évolutive sur l'infrastructure et l'interface peuvent entraîner des indisponibilités temporaires.",
-      explore: "Explorer l'app",
-      portfolio: "Explorer le Portfolio (lien externe)",
-      repo: "Repo Projet GitLab",
-      powered: "Powered by"
+      title: 'DevOpsNotes — Blog DevOps, DevSecOps & Cloud',
+      subtitle:
+        'Articles techniques, expérimentations et retours d’expérience autour du DevOps, du Cloud, de Kubernetes et de la cybersécurité.',
+
+      intro:
+        'DevOpsNotes est un blog technique et un laboratoire d’expérimentation consacré aux infrastructures modernes, à l’automatisation et à la sécurité des environnements Cloud-Native.',
+
+      intro2:
+        'Le site documente des projets et des expérimentations concrètes autour du développement, du déploiement, de l’administration systèmes et réseaux, du CI/CD, de Kubernetes et du DevSecOps.',
+
+      latestTitle: 'Derniers articles',
+      latestDescription:
+        'Découvrez les dernières expérimentations et publications techniques de DevOpsNotes.',
+      allArticles: 'Voir tous les articles →',
+      readArticle: "Lire l'article →",
+      loading: 'Chargement des articles...',
+      noArticles: 'Aucun article publié pour le moment.',
+
+      topicsTitle: 'Explorer les thématiques',
+      topics: [
+        'DevOps',
+        'DevSecOps',
+        'Kubernetes & K3s',
+        'Linux & systèmes',
+        'Réseaux',
+        'Cloud & CI/CD',
+        'Cybersécurité',
+        'Observabilité',
+      ],
+
+      labTitle: 'Un laboratoire technique en production',
+      labText:
+        "DevOpsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
+
+      aboutTitle: 'À propos de DevOpsNotes',
+      aboutText:
+        'DevOpsNotes est conçu et maintenu par Kamal Guidadou comme un projet personnel permettant de mettre en pratique et de documenter des compétences en administration systèmes et réseaux, infrastructure Cloud, DevOps et DevSecOps.',
+      aboutText2:
+        "Les articles publiés sur ce blog documentent les problèmes rencontrés, les choix techniques, les solutions mises en œuvre et les expérimentations réalisées sur l'infrastructure.",
+
+      portfolio: 'Voir mon portfolio →',
+      repo: 'Voir le projet GitHub →',
+
+      techTitle: 'Technologies & infrastructure',
+      techDescription:
+        'Le blog repose notamment sur React, TypeScript, Node.js, Express, MongoDB, Docker, Kubernetes/K3s, GitLab CI/CD, Nginx, Cloudflare et Sentry.',
+
+      maintenance:
+        'Des opérations de maintenance évolutive sur l’infrastructure et l’interface peuvent entraîner des indisponibilités temporaires.',
     },
+
     EN: {
-      title: "Technical Blog & DevSecOps Hub",
-      subtitle: "Cloud Architecture | CI/CD Automation | Cloud-native Security",
-      description1: "is a full-stack platform built to demonstrate end-to-end expertise in the Software Development Life Cycle (SDLC). More than just a technical demo, it's a living lab integrating security and automation best practices.",
-      description2: (
-        <>
-          A project designed to showcase DevOps and DevSecOps best practices, from containerization to CDN performance optimization with lightweight yet powerful and robust technologies for a microservices application.
-        </>
-      ),
-      notice: "Ongoing infrastructure and UI optimizations may result in occasional service interruptions.",
-      explore: "Explore the app",
-      portfolio: "Explore Portfolio (external link)",
-      repo: "GitLab Project Repo",
-      powered: "Powered by"
-    }
+      title: 'DevOpsNotes — DevOps, DevSecOps & Cloud Blog',
+      subtitle:
+        'Technical articles, experiments and field notes about DevOps, Cloud, Kubernetes and cybersecurity.',
+
+      intro:
+        'DevOpsNotes is a technical blog and experimentation lab focused on modern infrastructure, automation and Cloud-Native security.',
+
+      intro2:
+        'The website documents concrete projects and experiments covering software development, deployment, systems and network administration, CI/CD, Kubernetes and DevSecOps.',
+
+      latestTitle: 'Latest articles',
+      latestDescription:
+        'Discover the latest technical experiments and publications from DevOpsNotes.',
+      allArticles: 'View all articles →',
+      readArticle: 'Read article →',
+      loading: 'Loading articles...',
+      noArticles: 'No published articles yet.',
+
+      topicsTitle: 'Explore topics',
+      topics: [
+        'DevOps',
+        'DevSecOps',
+        'Kubernetes & K3s',
+        'Linux & systems',
+        'Networking',
+        'Cloud & CI/CD',
+        'Cybersecurity',
+        'Observability',
+      ],
+
+      labTitle: 'A technical laboratory running in production',
+      labText:
+        'DevOpsNotes is not only a publishing platform. The application itself is an experimentation environment covering full-stack development, containerization, Kubernetes/K3s orchestration, CI/CD, reverse proxying, Cloudflare, observability and infrastructure security.',
+
+      aboutTitle: 'About DevOpsNotes',
+      aboutText:
+        'DevOpsNotes is designed and maintained by Kamal Guidadou as a personal project used to practice and document skills in systems and network administration, Cloud infrastructure, DevOps and DevSecOps.',
+      aboutText2:
+        'The articles published on this blog document technical problems, architectural decisions, implemented solutions and infrastructure experiments.',
+
+      portfolio: 'View my portfolio →',
+      repo: 'View the GitLab project →',
+
+      techTitle: 'Technology & infrastructure',
+      techDescription:
+        'The blog is built with React, TypeScript, Node.js, Express, MongoDB, Docker, Kubernetes/K3s, GitLab CI/CD, Nginx, Cloudflare and Sentry.',
+
+      maintenance:
+        'Ongoing infrastructure and UI maintenance may occasionally cause temporary service interruptions.',
+    },
   };
 
   const t = content[lang];
 
+  const getImageUrl = (article: Article) => {
+    if (!article.imageUrl) return null;
+
+    return article.imageUrl.startsWith('http')
+      ? article.imageUrl
+      : `${R2_PUBLIC_URL}${
+          article.imageUrl.startsWith('/') ? '' : '/'
+        }${article.imageUrl}`;
+  };
+
   return (
-    <div className="landing-root">
-      <div className="lang-selector">
-        <button aria-label="FR" onClick={() => setLang('FR')} className={lang === 'FR' ? 'active' : ''}>🇫🇷 FR</button>
-        <button aria-label="EN" onClick={() => setLang('EN')} className={lang === 'EN' ? 'active' : ''}>🇺🇸 EN</button>
-      </div>
+    <>
+      <Helmet>
+        <title>{t.title}</title>
+        <meta
+          name="description"
+          content={t.subtitle + ' ' + t.intro}
+        />
+        <link
+          rel="canonical"
+          href="https://blog.devopsnotes.org/"
+        />
 
-      <div className="landing-hero">
-        <h1 className="landing-title">{t.title}</h1>
-        <p className="landing-subtitle">{t.subtitle}</p>
-        
-        <div className="landing-description">
-          <p className="landing-features">
-            <strong>DevopsNotes - Blog</strong> {t.description1}
-          </p> 
-          <div className="key-points-container">
-            {t.description2}
-          </div>
-        </div>
+        <meta property="og:title" content={t.title} />
+        <meta
+          property="og:description"
+          content={t.subtitle}
+        />
+        <meta
+          property="og:url"
+          content="https://blog.devopsnotes.org/"
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:site_name"
+          content="DevOpsNotes"
+        />
+      </Helmet>
 
-        <p className="beta-notice">
-          ⚠️ <strong>Note :</strong> {t.notice}
-        </p>
-        
-        <div className="landing-buttons">
-          <button className="btn btn-primary landing-btn" onClick={() => navigate('/articles')}>
-            🚀 {t.explore}
+      <main className="landing-root">
+        <div className="lang-selector" aria-label="Language selector">
+          <button
+            aria-label="Français"
+            onClick={() => setLang('FR')}
+            className={lang === 'FR' ? 'active' : ''}
+          >
+            🇫🇷 FR
           </button>
 
-          <a 
-            href="https://portfolio.devopsnotes.org" 
-            className="btn btn-primary landing-btn portfolio-btn"
-            style={{ backgroundColor: '#6366f1', borderColor: '#6366f1' }} // Un bleu-indigo pour différencier
+          <button
+            aria-label="English"
+            onClick={() => setLang('EN')}
+            className={lang === 'EN' ? 'active' : ''}
           >
-            🌐 {t.portfolio}
-          </a>
-
-          <a 
-            href="https://gitlab.com/portfolio-kamal-guidadou/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="btn btn-outline-dark landing-btn gitlab-btn"
-          >
-            <img src="/logos/gitlab.png" alt="GitLab" style={{ width: '20px', marginRight: '8px' }} />
-            {t.repo}
-          </a>
+            🇺🇸 EN
+          </button>
         </div>
-      </div>
 
-      <div className="landing-powered">
-        <p className="landing-powered-title">{t.powered}</p>
-        <div className="landing-tech-grid">
-          <img src="/logos/react.webp" alt="React" title="React 19 + TypeScript" />
-          <img src="/logos/node.webp" alt="Node.js" title="Node.js 20 + Express Backend" />
-          <img src="/logos/mongodb.webp" alt="MongoDB" title="MongoDB + Mongoose Cloud Database" />
-          <img src="/logos/docker.webp" alt="Docker" title="Docker Containerization" />
-          <img src="/logos/kubernetes.webp?=v2" alt="Kubernetes" title="Kubernetes / k3s : Orchestration" />
-          <img src="/logos/gitlab.webp" alt="GitLab" title="GitLab Repository and CI/CD Pipelines" />
-          <img src="/logos/cf.webp" alt="Cloudflare" title="CDN, R2 & Security" />
-          <img src="/logos/ingress.webp" alt="Ingress" title="Ingress : HTTP traffic manager" />
-          <img src="/logos/nginx.webp" alt="ginx" title="Reverse-Proxy Nginx" />
-          <img src="/logos/gcloud.webp" alt="Google Cloud" title="Google Cloud APIs" />
-          <img src="/logos/kamatera.webp" alt="Kamatera" title="VPS Kamatera" />
-          <img src="/logos/sentry.webp" alt="Sentry" title="Sentry Telemetry and Monitoring" />
-        </div>
-      </div>
-    </div>
+        {/* HERO */}
+        <section className="landing-hero">
+          <p className="landing-kicker">DEVOPSNOTES</p>
+
+          <h1 className="landing-title">{t.title}</h1>
+
+          <p className="landing-subtitle">
+            {t.subtitle}
+          </p>
+
+          <div className="landing-description">
+            <p>
+              <strong>DevOpsNotes</strong> {t.intro}
+            </p>
+
+            <p>{t.intro2}</p>
+          </div>
+
+          <div className="landing-buttons">
+            <Link
+              to="/articles"
+              className="btn btn-primary landing-btn"
+            >
+              🚀 {t.allArticles}
+            </Link>
+
+            <a
+              href="https://devopsnotes.org"
+              className="btn btn-primary landing-btn portfolio-btn"
+            >
+              🌐 {t.portfolio}
+            </a>
+
+            <a
+              href="https://git.kamal-guidadou.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline-dark landing-btn gitlab-btn"
+            >
+              <img
+                src="/logos/github.png"
+                alt="GitHub"
+              />
+              {t.repo}
+            </a>
+          </div>
+        </section>
+
+        {/* ARTICLES */}
+        <section className="home-section latest-section">
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">PUBLICATIONS</p>
+              <h2>{t.latestTitle}</h2>
+              <p>{t.latestDescription}</p>
+            </div>
+
+            <Link
+              to="/articles"
+              className="section-link"
+            >
+              {t.allArticles}
+            </Link>
+          </div>
+
+          {loading ? (
+            <div className="articles-loading">
+              {t.loading}
+            </div>
+          ) : articles.length === 0 ? (
+            <div className="articles-empty">
+              {t.noArticles}
+            </div>
+          ) : (
+            <div className="home-articles-grid">
+              {articles.slice(0, 3).map((article) => {
+                const imageUrl = getImageUrl(article);
+
+                return (
+                  <article
+                    key={article._id}
+                    className="home-article-card"
+                  >
+                    <Link
+                      to={`/articles/${article.slug}`}
+                      className="home-article-image"
+                    >
+                      {imageUrl ? (
+                        <img
+                          src={imageUrl}
+                          alt={article.title}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="home-article-image-fallback">
+                          DevOpsNotes
+                        </div>
+                      )}
+                    </Link>
+
+                    <div className="home-article-content">
+                      <div className="home-article-tags">
+                        {(article.tags || [])
+                          .slice(0, 3)
+                          .map((tag) => (
+                            <span key={tag}>#{tag}</span>
+                          ))}
+                      </div>
+
+                      <h3>
+                        <Link
+                          to={`/articles/${article.slug}`}
+                        >
+                          {article.title}
+                        </Link>
+                      </h3>
+
+                      <p>
+                        {(
+                          article.excerpt ||
+                          article.content ||
+                          ''
+                        )
+                          .replace(/[#*`]/g, '')
+                          .slice(0, 180)}
+                        ...
+                      </p>
+
+                      <Link
+                        to={`/articles/${article.slug}`}
+                        className="home-article-link"
+                      >
+                        {t.readArticle}
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* TOPICS */}
+        <section className="home-section topics-section">
+          <div className="section-heading centered">
+            <p className="section-kicker">DOMAINES</p>
+            <h2>{t.topicsTitle}</h2>
+          </div>
+
+          <div className="topics-grid">
+            {t.topics.map((topic) => (
+              <span
+                key={topic}
+                className="topic-card"
+              >
+                {topic}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        {/* LAB */}
+        <section className="home-section lab-section">
+          <div className="content-panel">
+            <p className="section-kicker">EXPERIMENTATION</p>
+
+            <h2>{t.labTitle}</h2>
+
+            <p>{t.labText}</p>
+          </div>
+        </section>
+
+        {/* ABOUT */}
+        <section className="home-section about-section">
+          <div className="about-grid">
+            <div className="about-content">
+              <p className="section-kicker">À PROPOS</p>
+
+              <h2>{t.aboutTitle}</h2>
+
+              <p>{t.aboutText}</p>
+
+              <p>{t.aboutText2}</p>
+
+              <div className="about-actions">
+                <a
+                  href="https://devopsnotes.org"
+                  className="btn btn-primary landing-btn"
+                >
+                  {t.portfolio}
+                </a>
+
+                <a
+                  href="https://git.kamal-guidadou.fr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline-dark landing-btn"
+                >
+                  {t.repo}
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TECHNOLOGIES */}
+        <section className="home-section technologies-section">
+          <div className="section-heading centered">
+            <p className="section-kicker">STACK</p>
+
+            <h2>{t.techTitle}</h2>
+
+            <p>{t.techDescription}</p>
+          </div>
+
+          <div className="landing-tech-grid">
+            <img
+              src="/logos/react.webp"
+              alt="React"
+              title="React 19 + TypeScript"
+            />
+
+            <img
+              src="/logos/node.webp"
+              alt="Node.js"
+              title="Node.js 20 + Express"
+            />
+
+            <img
+              src="/logos/mongodb.webp"
+              alt="MongoDB"
+              title="MongoDB + Mongoose"
+            />
+
+            <img
+              src="/logos/docker.webp"
+              alt="Docker"
+              title="Docker Containerization"
+            />
+
+            <img
+              src="/logos/kubernetes.webp?=v2"
+              alt="Kubernetes K3s"
+              title="Kubernetes / K3s"
+            />
+
+            <img
+              src="/logos/github.png"
+              alt="GitLab CI/CD"
+              title="GitLab CI/CD"
+            />
+
+            <img
+              src="/logos/cf.webp"
+              alt="Cloudflare"
+              title="Cloudflare CDN, R2 & Security"
+            />
+
+            <img
+              src="/logos/ingress.webp"
+              alt="Nginx Ingress"
+              title="Nginx Ingress"
+            />
+
+            <img
+              src="/logos/nginx.webp"
+              alt="Nginx"
+              title="Nginx Reverse Proxy"
+            />
+
+            <img
+              src="/logos/gcloud.webp"
+              alt="Google Cloud"
+              title="Google Cloud APIs"
+            />
+
+            <img
+              src="/logos/kamatera.webp"
+              alt="Kamatera"
+              title="Kamatera VPS"
+            />
+
+            <img
+              src="/logos/sentry.webp"
+              alt="Sentry"
+              title="Sentry Monitoring"
+            />
+          </div>
+        </section>
+
+        <p className="beta-notice">
+          ⚠️ <strong>Note :</strong> {t.maintenance}
+        </p>
+      </main>
+    </>
   );
 }

@@ -6,3 +6,5 @@ declare module 'react' {
     fetchpriority?: 'high' | 'low' | 'auto'; // Optionnel : garde les deux pour être tranquille
   }
 }
+
+declare module '*.css';
