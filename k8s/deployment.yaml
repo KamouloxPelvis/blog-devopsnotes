@@ -16,10 +16,10 @@ spec:
         app: blog-devopsnotes
     spec:
       imagePullSecrets:
-        - name: gitlab-registry-secret
+        - name: ghcr-secret
       containers:
       - name: blog-backend
-        image: registry.gitlab.com/portfolio-kamal-guidadou/devopsnotes-blog/backend:latest
+        image: ghcr.io/kamouloxpelvis/blog-devopsnotes-backend:${{ github.sha }}
         ports:
         - containerPort: 5000
         env:
@@ -32,8 +32,7 @@ spec:
             # S'assurer que le secret a bien été créé dans le namespace blog-prod
             name: blog-secrets
       - name: blog-frontend
-        # Utilisation de la variable GitLab CI pour l'image frontend
-        image: registry.gitlab.com/portfolio-kamal-guidadou/devopsnotes-blog/frontend:latest
+        image: ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${{ github.sha }}
         imagePullPolicy: Always
         ports:
         - containerPort: 80
