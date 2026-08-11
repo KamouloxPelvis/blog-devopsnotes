@@ -29,7 +29,6 @@ spec:
           value: "app:*"
         envFrom:
         - secretRef:
-            # S'assurer que le secret a bien été créé dans le namespace blog-prod
             name: blog-secrets
       - name: blog-frontend
         image: ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${{ github.sha }}

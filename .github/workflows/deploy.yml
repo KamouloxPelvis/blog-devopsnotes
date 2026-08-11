@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ghcr.io/kamouloxpelvis/devopsnotes
+  IMAGE_PREFIX: ghcr.io/kamouloxpelvis/blog-devopsnotes
 
 jobs:
 
