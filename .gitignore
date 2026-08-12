@@ -45,3 +45,6 @@ coverage/
 # OS
 .DS_Store
 Thumbs.db
+
+#action runner
+actions-runner/

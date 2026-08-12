@@ -68,7 +68,6 @@ jobs:
           secrets: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
-
   # =========================================================
   # DEPLOY K3S
   # =========================================================
@@ -76,55 +75,24 @@ jobs:
   deploy:
     name: Deploy to K3s
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
 
-      - name: Configure SSH
+      - name: Deploy
         env:
-          K3S_HOST: ${{ secrets.K3S_HOST }}
-          K3S_USER: ${{ secrets.K3S_USER }}
-          K3S_SSH_KEY: ${{ secrets.K3S_SSH_KEY }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           set -e
 
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
+          echo "🚀 Deploying DevOpsNotes ${IMAGE_TAG}"
 
-          printf '%s\n' "$K3S_SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          kubectl -n blog-prod set image deployment/blog-devopsnotes-deployment \
+            blog-backend=ghcr.io/kamouloxpelvis/blog-devopsnotes-backend:${IMAGE_TAG} \
+            blog-frontend=ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${IMAGE_TAG}
 
-          echo "Testing SSH connectivity..."
+          kubectl -n blog-prod rollout status \
+            deployment/blog-devopsnotes-deployment \
+            --timeout=300s
 
-          nc -vz -w 10 "$K3S_HOST" 22
-
-          echo "Retrieving SSH host key..."
-
-          ssh-keyscan -T 10 -4 -H "$K3S_HOST" >> ~/.ssh/known_hosts
-
-          echo "SSH configuration successful"
-
-      - name: Deploy
-        env:
-          K3S_HOST: ${{ secrets.K3S_HOST }}
-          K3S_USER: ${{ secrets.K3S_USER }}
-          IMAGE_TAG: ${{ github.sha }}
-
-        run: |
-          ssh "${K3S_USER}@${K3S_HOST}" << EOF
-
-            set -e
-
-            echo "🚀 Deploying DevOpsNotes ${IMAGE_TAG}"
-
-            kubectl -n blog-prod set image deployment/blog-devopsnotes-deployment \
-              blog-backend=ghcr.io/kamouloxpelvis/blog-devopsnotes-backend:${IMAGE_TAG} \
-              blog-frontend=ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${IMAGE_TAG}
-
-            kubectl -n blog-prod rollout status \
-              deployment/blog-devopsnotes-deployment \
-              --timeout=300s
-
-            echo "✅ DevOpsNotes deployment successful"
-
-          EOF
+          echo "✅ DevOpsNotes deployment successful"
