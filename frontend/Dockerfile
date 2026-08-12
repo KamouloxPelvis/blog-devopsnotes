@@ -1,5 +1,5 @@
 # =========================================================
-# Build stage
+# Stage 1 — Build
 # =========================================================
 
 FROM node:20-alpine AS build
@@ -18,14 +18,12 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
 
 
 # =========================================================
-# Production stage
+# Stage 2 — Production
 # =========================================================
 
 FROM nginx:stable-alpine
 
 COPY --from=build /app/build /usr/share/nginx/html
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
