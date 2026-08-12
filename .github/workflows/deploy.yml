@@ -79,9 +79,21 @@ jobs:
 
     steps:
 
+      - name: Verify Kubernetes access
+        env:
+          KUBECONFIG: /home/kamal/.kube/config
+        run: |
+          set -e
+
+          echo "🔍 Checking Kubernetes access..."
+
+          kubectl config current-context
+          kubectl get nodes
+
       - name: Deploy
         env:
           IMAGE_TAG: ${{ github.sha }}
+          KUBECONFIG: /home/kamal/.kube/config
         run: |
           set -e
 
