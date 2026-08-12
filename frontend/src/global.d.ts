@@ -1,8 +1,11 @@
-declare module 'react' {
+// eslint-disable-next-line
+import "react";
+
+declare module "*.css";
+
+declare module "react" {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
-    fetchPriority?: 'high' | 'low' | 'auto';
-    fetchpriority?: 'high' | 'low' | 'auto'; // Optionnel : garde les deux pour être tranquille
+    fetchPriority?: "high" | "low" | "auto";
+    fetchpriority?: "high" | "low" | "auto";
   }
 }
-
-declare module '*.css';
