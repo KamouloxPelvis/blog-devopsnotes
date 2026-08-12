@@ -81,14 +81,28 @@ jobs:
     steps:
 
       - name: Configure SSH
+        env:
+          K3S_HOST: ${{ secrets.K3S_HOST }}
+          K3S_USER: ${{ secrets.K3S_USER }}
+          K3S_SSH_KEY: ${{ secrets.K3S_SSH_KEY }}
         run: |
+          set -e
+
           mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
 
-          echo "${{ secrets.K3S_SSH_KEY }}" > ~/.ssh/id_ed25519
-
+          printf '%s\n' "$K3S_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-          ssh-keyscan -H "${{ secrets.K3S_HOST }}" >> ~/.ssh/known_hosts
+          echo "Testing SSH connectivity..."
+
+          nc -vz -w 10 "$K3S_HOST" 22
+
+          echo "Retrieving SSH host key..."
+
+          ssh-keyscan -T 10 -4 -H "$K3S_HOST" >> ~/.ssh/known_hosts
+
+          echo "SSH configuration successful"
 
       - name: Deploy
         env:
