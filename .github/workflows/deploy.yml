@@ -13,6 +13,10 @@ env:
 
 jobs:
 
+  # =========================================================
+  # BUILD & PUSH
+  # =========================================================
+
   build:
     name: Build & Push Docker images
     runs-on: ubuntu-latest
@@ -36,9 +40,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # ---------------------------------------------------------
+      # -------------------------------------------------------
       # Backend
-      # ---------------------------------------------------------
+      # -------------------------------------------------------
 
       - name: Build & push backend
         uses: docker/build-push-action@v6
@@ -49,9 +53,9 @@ jobs:
             ${{ env.IMAGE_PREFIX }}-backend:latest
             ${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }}
 
-      # ---------------------------------------------------------
+      # -------------------------------------------------------
       # Frontend
-      # ---------------------------------------------------------
+      # -------------------------------------------------------
 
       - name: Build & push frontend
         uses: docker/build-push-action@v6
@@ -61,6 +65,13 @@ jobs:
           tags: |
             ${{ env.IMAGE_PREFIX }}-frontend:latest
             ${{ env.IMAGE_PREFIX }}-frontend:${{ github.sha }}
+          secrets: |
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+
+
+  # =========================================================
+  # DEPLOY K3S
+  # =========================================================
 
   deploy:
     name: Deploy to K3s
@@ -69,13 +80,12 @@ jobs:
 
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
+
           echo "${{ secrets.K3S_SSH_KEY }}" > ~/.ssh/id_ed25519
+
           chmod 600 ~/.ssh/id_ed25519
 
           ssh-keyscan -H "${{ secrets.K3S_HOST }}" >> ~/.ssh/known_hosts
@@ -85,6 +95,7 @@ jobs:
           K3S_HOST: ${{ secrets.K3S_HOST }}
           K3S_USER: ${{ secrets.K3S_USER }}
           IMAGE_TAG: ${{ github.sha }}
+
         run: |
           ssh "${K3S_USER}@${K3S_HOST}" << EOF
 
@@ -93,8 +104,8 @@ jobs:
             echo "🚀 Deploying DevOpsNotes ${IMAGE_TAG}"
 
             kubectl -n blog-prod set image deployment/blog-devopsnotes-deployment \
-              blog-backend=ghcr.io/kamouloxpelvis/devopsnotes-backend:${IMAGE_TAG} \
-              blog-frontend=ghcr.io/kamouloxpelvis/devopsnotes-frontend:${IMAGE_TAG}
+              blog-backend=ghcr.io/kamouloxpelvis/blog-devopsnotes-backend:${IMAGE_TAG} \
+              blog-frontend=ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${IMAGE_TAG}
 
             kubectl -n blog-prod rollout status \
               deployment/blog-devopsnotes-deployment \
