@@ -12,6 +12,9 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
     export SENTRY_AUTH_TOKEN=$(cat /run/secrets/SENTRY_AUTH_TOKEN) && \
     NODE_OPTIONS="--max-old-space-size=1536" npm run build

@@ -65,6 +65,10 @@ jobs:
           tags: |
             ${{ env.IMAGE_PREFIX }}-frontend:latest
             ${{ env.IMAGE_PREFIX }}-frontend:${{ github.sha }}
+
+          build-args: |
+            REACT_APP_API_URL=https://blog.devopsnotes.org/api
+            
           secrets: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 

@@ -33,18 +33,6 @@ export default function HomePage() {
       loading: 'Chargement des articles...',
       noArticles: 'Aucun article publié pour le moment.',
 
-      topicsTitle: 'Explorer les thématiques',
-      topics: [
-        'DevOps',
-        'DevSecOps',
-        'Kubernetes & K3s',
-        'Linux & systèmes',
-        'Réseaux',
-        'Cloud & CI/CD',
-        'Cybersécurité',
-        'Observabilité',
-      ],
-
       labTitle: 'Un laboratoire technique en production',
       labText:
         "DevOpsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
@@ -84,18 +72,6 @@ export default function HomePage() {
       readArticle: 'Read article →',
       loading: 'Loading articles...',
       noArticles: 'No published articles yet.',
-
-      topicsTitle: 'Explore topics',
-      topics: [
-        'DevOps',
-        'DevSecOps',
-        'Kubernetes & K3s',
-        'Linux & systems',
-        'Networking',
-        'Cloud & CI/CD',
-        'Cybersecurity',
-        'Observability',
-      ],
 
       labTitle: 'A technical laboratory running in production',
       labText:
@@ -167,7 +143,8 @@ export default function HomePage() {
             onClick={() => setLang('FR')}
             className={lang === 'FR' ? 'active' : ''}
           >
-            🇫🇷 FR
+            <img src="/flags/fr.svg" alt="" />
+            FR
           </button>
 
           <button
@@ -175,7 +152,8 @@ export default function HomePage() {
             onClick={() => setLang('EN')}
             className={lang === 'EN' ? 'active' : ''}
           >
-            🇺🇸 EN
+            <img src="/flags/us.svg" alt="" />
+            EN
           </button>
         </div>
 
@@ -319,25 +297,6 @@ export default function HomePage() {
               })}
             </div>
           )}
-        </section>
-
-        {/* TOPICS */}
-        <section className="home-section topics-section">
-          <div className="section-heading centered">
-            <p className="section-kicker">DOMAINES</p>
-            <h2>{t.topicsTitle}</h2>
-          </div>
-
-          <div className="topics-grid">
-            {t.topics.map((topic) => (
-              <span
-                key={topic}
-                className="topic-card"
-              >
-                {topic}
-              </span>
-            ))}
-          </div>
         </section>
 
         {/* LAB */}

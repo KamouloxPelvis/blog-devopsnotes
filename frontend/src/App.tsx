@@ -37,8 +37,8 @@ function App() {
           {/* Le Suspense affiche un fallback léger pendant que le chunk de la page charge */}
           <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Chargement...</div>}>
             <Routes>
-              <Route path="/" element={<Navigate to="/homepage" replace />} />
-              <Route path="/homepage" element={<HomePage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/homepage" element={<Navigate to="/" replace />} />
               
               {/* Articles */}
               <Route path="/articles" element={<ArticlesPage />} />
