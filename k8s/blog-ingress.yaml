@@ -28,14 +28,14 @@ spec:
           service:
             name: blog-service
             port:
-              number: 5000
+              number: 80
       - path: /socket.io
         pathType: ImplementationSpecific
         backend:
           service:
             name: blog-service
             port:
-              number: 5000
+              number: 80
       - path: /
         pathType: Prefix
         backend:
