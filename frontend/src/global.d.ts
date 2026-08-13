@@ -1,8 +1,5 @@
 // eslint-disable-next-line
 import "react";
-
-declare module "*.css";
-
 declare module "react" {
   interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
     fetchPriority?: "high" | "low" | "auto";
