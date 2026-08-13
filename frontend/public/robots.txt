@@ -1,19 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
-
-# Autoriser l'indexation de tout le contenu public pour tous les robots
-
 User-agent: *
 Allow: /
 
-# Bloquer l'accès aux dossiers de configuration ou fichiers techniques
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+Disallow: /chat
 
-Disallow: /static/js/*.map$
-Disallow: /config/
-Disallow: /build/
-
-# Optimisation pour les bots d'IA (si tu veux qu'ils te citent proprement)
-User-agent: GPTBot
-Allow: /
-
-# Chemin vers le Sitemap
-Sitemap: https://devopsnotes.org/sitemap.xml
+Sitemap: https://blog.devopsnotes.org/sitemap.xml

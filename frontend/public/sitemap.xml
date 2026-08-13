@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://blog.devopsnotes.org/\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/forum\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/k-guard-v170-vers-une-gouvernance-plus-matrise-de-la-scurit-dun-cluster-k3s\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/scuriser-la-finance-cloud-native-pourquoi-la-stack-falco-wazuh-elk-est-devenue-le-standard-de-la-dfense-en-profondeur\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/k-guard-orchestration-sre-et-audit-de-scurit-sur-k3s\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/migration-vers-k3s-pourquoi-jai-choisi-de-passer-de-docker-compose-kubernetes-pour-mon-blog-et-mon-portfolio\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/scuriser-les-uploads-cloud-intgration-de-clamav-et-r2-avec-docker\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/test\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/pipeline-cicd-le-pont-automatis-entre-lide-et-la-production\</loc\>
+  </url>
+
+  <url>
+    <loc>https://blog.devopsnotes.org/articles/de-ladmin-systmes-et-rseaux-au-devsecops-la-convergence-logique-dun-parcours-multidisciplinaire\</loc\>
+  </url>
+
+</urlset>
