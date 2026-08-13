@@ -69,33 +69,43 @@ jobs:
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
   # =========================================================
-  # DEPLOY K3S
+  # DEPLOY TO K3S
   # =========================================================
 
   deploy_to_k3s:
-      needs: build
-      runs-on: self-hosted
+    name: Deploy to K3s
+    needs: build
+    runs-on: self-hosted
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    steps:
 
-        - name: Deploy to K3s
-          run: |
-            set -e
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            echo "🚀 Deploying DevOpsNotes with SHA: ${{ github.sha }}"
+      - name: Check Kubernetes access
+        run: |
+          set -e
 
-            kubectl apply -f k8s/ -n blog-prod
+          echo "🔍 Checking Kubernetes access..."
+          kubectl config current-context
+          kubectl get nodes
 
-            kubectl set image deployment/blog-devopsnotes-deployment \
-              blog-backend=ghcr.io/kamouloxpelvis/blog-devopsnotes-backend:${{ github.sha }} \
-              blog-frontend=ghcr.io/kamouloxpelvis/blog-devopsnotes-frontend:${{ github.sha }} \
-              -n blog-prod
+      - name: Deploy to K3s
+        run: |
+          set -e
 
-            kubectl rollout status \
-              deployment/blog-devopsnotes-deployment \
-              -n blog-prod \
-              --timeout=300s
+          echo "🚀 Deploying DevOpsNotes with SHA: ${{ github.sha }}"
 
-            echo "✅ DevOpsNotes deployment successful"
+          kubectl apply -f k8s/ -n blog-prod
+
+          kubectl set image deployment/blog-devopsnotes-deployment \
+            blog-backend=${{ env.IMAGE_PREFIX }}-backend:${{ github.sha }} \
+            blog-frontend=${{ env.IMAGE_PREFIX }}-frontend:${{ github.sha }} \
+            -n blog-prod
+
+          kubectl rollout status \
+            deployment/blog-devopsnotes-deployment \
+            -n blog-prod \
+            --timeout=300s
+
+          echo "✅ DevOpsNotes deployment successful"
