@@ -61,6 +61,13 @@ export default function HomePage() {
       labText:
         "DevOpsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
 
+      communityText:
+        "Mais l'expérimentation ne s'arrête pas au code. Inscrivez-vous pour réagir aux articles, partager vos retours et vos propres expériences dans le forum, ou simplement discuter avec la communauté via le chat.",
+
+      joinCommunity: 'Rejoindre la communauté →',
+      discoverForum: 'Découvrir le forum →',
+      chat: 'Discuter sur le chat →',
+
       aboutTitle: 'À propos de DevOpsNotes',
       aboutText:
         'DevOpsNotes est conçu et maintenu par Kamal Guidadou comme un projet personnel permettant de mettre en pratique et de documenter des compétences en administration systèmes et réseaux, infrastructure Cloud, DevOps et DevSecOps.',
@@ -100,6 +107,12 @@ export default function HomePage() {
       labTitle: 'A technical laboratory running in production',
       labText:
         'DevOpsNotes is not only a publishing platform. The application itself is an experimentation environment covering full-stack development, containerization, Kubernetes/K3s orchestration, CI/CD, reverse proxying, Cloudflare, observability and infrastructure security.',
+      communityText:
+        'However, experimentation does not stop at the code. Sign up to comment on articles, share your feedback and experiences in the forum, or simply chat with the community.',
+
+      joinCommunity: 'Join the community →',
+      discoverForum: 'Discover the forum →',
+      chat: 'Chat with the community →',
 
       aboutTitle: 'About DevOpsNotes',
       aboutText:
@@ -323,6 +336,31 @@ export default function HomePage() {
             <h2>{t.labTitle}</h2>
 
             <p>{t.labText}</p>
+
+            <p>{t.communityText}</p>
+
+            <div className="about-actions">
+              <Link
+                to="/signup"
+                className="btn btn-primary landing-btn"
+              >
+                {t.joinCommunity}
+              </Link>
+
+              <Link
+                to="/forum"
+                className="btn btn-outline-dark landing-btn"
+              >
+                {t.discoverForum}
+              </Link>
+
+              <Link
+                to="/chat"
+                className="btn btn-outline-dark landing-btn"
+              >
+                {t.chat}
+              </Link>
+            </div>
           </div>
         </section>
 
