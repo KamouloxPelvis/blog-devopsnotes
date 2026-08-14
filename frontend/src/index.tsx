@@ -7,6 +7,7 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import reportWebVitals from './reportWebVitals';
 
+
 Sentry.init({
   dsn: "https://97dd53c2b61bbf7f75e5d17b49ed61d7@o4510760299986944.ingest.de.sentry.io/4510760304836688",
   // Setting this option to true will send default PII data to Sentry.
