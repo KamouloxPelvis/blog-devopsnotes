@@ -1,3 +1,24 @@
+/* ===== MÉTADONNÉES ARTICLE ===== */
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: -2px;
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.article-meta-separator {
+  color: var(--toolbar-separator);
+}
+
+.article-author {
+  font-weight: 500;
+}
+
 /* ===== HEADER & RECHERCHE ===== */
 .articles-header-v2 {
   display: flex;
@@ -292,11 +313,10 @@
 
 /* ===== PAGINATION ===== */
 .pagination-container {
-  display: flex;  
+  display: flex;
   justify-content: center;
-  margin-top: -1.1rem;
-  margin-bottom: 1.2rem;
-  height: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .pagination-dots-wrapper {

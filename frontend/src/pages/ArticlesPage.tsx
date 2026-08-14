@@ -353,18 +353,6 @@ export function ArticlesPage() {
 
       <header className="articles-header-v2">
 
-        <div className="articles-heading">
-          <h1 className="articles-page-title">
-            Articles DevOps, DevSecOps & Cloud
-          </h1>
-
-          <p className="articles-page-description">
-            Expérimentations, retours d’expérience et articles
-            techniques autour des infrastructures modernes,
-            du Cloud, de Kubernetes et de la cybersécurité.
-          </p>
-        </div>
-
         <div className="articles-search-wrapper">
           <input
             type="search"
@@ -546,11 +534,17 @@ export function ArticlesPage() {
                         : '/'
                     }${article.imageUrl}`
                 : null;
-
+              
               const publishedDate =
                 formatPublishedDate(
                   article.publishedAt
                 );
+              
+              const authorName =
+                typeof article.author === 'object' &&
+                article.author
+                  ? article.author.pseudo
+                  : undefined;
 
               return (
                 <article
@@ -603,7 +597,6 @@ export function ArticlesPage() {
                     {/* TITRE SEO */}
 
                     <h2 className="article-title-v2">
-
                       <Link
                         to={`/articles/${article.slug}`}
                         className="article-title-link"
@@ -616,20 +609,34 @@ export function ArticlesPage() {
                           Brouillon
                         </span>
                       )}
-
                     </h2>
 
-                    {/* DATE DE PUBLICATION */}
+                    {(publishedDate || authorName) && (
+                      <div className="article-meta">
 
-                    {article.status === 'published' &&
-                      publishedDate && (
-                        <time
-                          className="article-published-date"
-                          dateTime={article.publishedAt}
-                        >
-                          Publié le {publishedDate}
-                        </time>
-                      )}
+                        {publishedDate && (
+                          <time
+                            dateTime={article.publishedAt}
+                            className="article-created-date"
+                          >
+                            Publié le {publishedDate}
+                          </time>
+                        )}
+
+                        {publishedDate && authorName && (
+                          <span className="article-meta-separator">
+                            ·
+                          </span>
+                        )}
+
+                        {authorName && (
+                          <span className="article-author">
+                            Par {authorName}
+                          </span>
+                        )}
+
+                      </div>
+                    )}
 
                     {/* EXCERPT */}
 
