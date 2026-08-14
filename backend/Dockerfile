@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json tsconfig.json ./
 
 # Installation reproductible depuis package-lock.json
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 
 # Copier le code source
 COPY src ./src
@@ -31,7 +31,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installer uniquement les dépendances de production
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 # Copier le build TypeScript
 COPY --from=build /app/dist ./dist
