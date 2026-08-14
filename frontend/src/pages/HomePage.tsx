@@ -8,6 +8,30 @@ import '../styles/HomePage.css';
 const R2_PUBLIC_URL =
   process.env.REACT_APP_R2_PUBLIC_URL ?? 'https://resources.devopsnotes.org';
 
+const stripHtml = (html: string): string => {
+  if (!html) return '';
+
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  
+  return (doc.body.textContent || '')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
+const getExcerpt = (article: Article): string => {
+  const text = stripHtml(
+    article.excerpt ||
+      article.content ||
+      ''
+  );
+
+  if (text.length <= 180) {
+    return text;
+  }
+
+  return `${text.slice(0, 180).trim()}...`;
+};
+
 export default function HomePage() {
   const [lang, setLang] = useState<'FR' | 'EN'>('FR');
 
@@ -106,6 +130,7 @@ export default function HomePage() {
           article.imageUrl.startsWith('/') ? '' : '/'
         }${article.imageUrl}`;
   };
+
 
   return (
     <>
@@ -274,16 +299,7 @@ export default function HomePage() {
                         </Link>
                       </h3>
 
-                      <p>
-                        {(
-                          article.excerpt ||
-                          article.content ||
-                          ''
-                        )
-                          .replace(/[#*`]/g, '')
-                          .slice(0, 180)}
-                        ...
-                      </p>
+                      <p>{getExcerpt(article)}</p>
 
                       <Link
                         to={`/articles/${article.slug}`}
