@@ -492,7 +492,7 @@ export default function ArticleShow() {
           content={authorName}
         />
 
-        {article?.tags?.map((tag) => (
+        {(article?.tags ?? []).map((tag) => (
           <meta
             key={tag}
             property="article:tag"
