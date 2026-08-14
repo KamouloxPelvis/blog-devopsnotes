@@ -116,7 +116,9 @@ router.get(
       // les visiteurs ne doivent jamais recevoir les brouillons.
       // --------------------------------------------------------
 
-      const query =
+      const query: {
+        status?: 'draft' | 'published';
+      } =
         req.user?.role === 'admin'
           ? {}
           : { status: 'published' };
