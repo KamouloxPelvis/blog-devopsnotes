@@ -2,48 +2,107 @@ import { Request, Response } from 'express';
 import { Article } from '../models/Article';
 import { Thread } from '../models/Thread';
 
-export const getSitemap = async (req: Request, res: Response) => {
-  try {
-    const baseUrl = 'https://blog.devopsnotes.org';
+const BASE_URL = 'https://blog.devopsnotes.org';
 
-    // On récupère les données nécessaires
+const escapeXml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+
+export const getSitemap = async (
+  _req: Request,
+  res: Response
+) => {
+  try {
     const [articles, threads] = await Promise.all([
-      Article.find({ status: 'published' }, 'slug updatedAt'),
-      Thread.find({}, '_id updatedAt').limit(500) // On récupère _id ici
+      Article.find(
+        { status: 'published' },
+        'slug updatedAt'
+      ).lean(),
+
+      Thread.find(
+        {},
+        '_id updatedAt'
+      )
+        .sort({ updatedAt: -1 })
+        .limit(500)
+        .lean(),
     ]);
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${baseUrl}/</loc><priority>1.0</priority><changefreq>daily</changefreq></url>
-  <url><loc>${baseUrl}/articles</loc><priority>0.9</priority><changefreq>daily</changefreq></url>
-  <url><loc>${baseUrl}/forum</loc><priority>0.9</priority><changefreq>daily</changefreq></url>`;
+    const urls: string[] = [];
 
-    // Articles : Identification par Slug
-    articles.forEach((art: any) => {
-      xml += `
+    // ============================================================
+    // Pages principales
+    // ============================================================
+
+    urls.push(`
   <url>
-    <loc>${baseUrl}/articles/${art.slug}</loc>
-    <lastmod>${art.updatedAt.toISOString()}</lastmod>
-    <priority>0.8</priority>
-  </url>`;
-    });
+    <loc>${BASE_URL}/</loc>
+  </url>`);
 
-    // Forum : Identification par ID (basé sur ta route GET /threads/:id)
-    threads.forEach((thread: any) => {
-      xml += `
+    urls.push(`
   <url>
-    <loc>${baseUrl}/forum/thread/${thread._id}</loc>
-    <lastmod>${thread.updatedAt.toISOString()}</lastmod>
-    <priority>0.7</priority>
-  </url>`;
-    });
+    <loc>${BASE_URL}/articles</loc>
+  </url>`);
 
-    xml += `\n</urlset>`;
+    urls.push(`
+  <url>
+    <loc>${BASE_URL}/forum</loc>
+  </url>`);
 
-    res.header('Content-Type', 'application/xml');
-    res.send(xml);
+    // ============================================================
+    // Articles publiés uniquement
+    // ============================================================
+
+    for (const article of articles) {
+      if (!article.slug) {
+        continue;
+      }
+
+      const lastmod = article.updatedAt
+        ? new Date(article.updatedAt).toISOString()
+        : null;
+
+      urls.push(`
+  <url>
+    <loc>${BASE_URL}/articles/${escapeXml(article.slug)}</loc>
+    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
+  </url>`);
+    }
+
+    // ============================================================
+    // Threads du forum
+    // ============================================================
+
+    for (const thread of threads) {
+      const lastmod = thread.updatedAt
+        ? new Date(thread.updatedAt).toISOString()
+        : null;
+
+      urls.push(`
+  <url>
+    <loc>${BASE_URL}/forum/thread/${thread._id}</loc>
+    ${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}
+  </url>`);
+    }
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}
+</urlset>`;
+
+    res
+      .status(200)
+      .type('application/xml')
+      .send(xml);
   } catch (error) {
-    console.error("Sitemap error:", error);
-    res.status(500).end();
+    console.error('Sitemap error:', error);
+
+    res
+      .status(500)
+      .type('text/plain')
+      .send('Unable to generate sitemap');
   }
 };

@@ -23,6 +23,7 @@ import chatRoutes from './routes/chat';
 import forumRoutes from './routes/forum';
 import commentRoutes from './routes/comments';
 import seoRoutes from './routes/seo';
+import { getSitemap } from './controllers/seoController';
 
 // Import du modèle Message (nécessaire pour la logique de sauvegarde)
 import { Message } from './models/Message';
@@ -128,6 +129,10 @@ app.get('/metrics', async (_req, res) => {
     res.status(500).send(err);
   }
 });
+
+// --- SEO ---
+// Sitemap public à la racine du domaine
+app.get('/sitemap.xml', getSitemap);
 
 // --- ROUTES API ---
 app.use('/api', uploadRoutes); // ROUTE IMAGES R2
