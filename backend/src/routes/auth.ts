@@ -141,16 +141,45 @@ authRouter.post('/logout', (req, res) => {
 
 // ---------- VERIFY / FORGOT / RESET (Simplifiés) ----------
 authRouter.get('/verify-email', async (req, res) => {
-  const { token } = req.query;
+  const token =
+    typeof req.query.token === 'string'
+      ? req.query.token
+      : undefined;
+
+  if (!token) {
+    return res.status(400).json({
+      message: 'Token de validation manquant.',
+    });
+  }
+
   try {
-    const user = await User.findOneAndUpdate(
-      { verificationToken: token },
-      { isVerified: true, $unset: { verificationToken: "" } }
-    );
-    if (!user) return res.status(400).json({ message: 'Lien invalide.' });
-    return res.json({ message: 'Compte activé !' });
+    const user = await User.findOne({
+      verificationToken: token,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        message: 'Lien invalide.',
+      });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+
+    await user.save();
+
+    return res.json({
+      message: 'Compte activé !',
+    });
   } catch (err) {
-    return res.status(500).json({ message: 'Erreur validation.' });
+    console.error(
+      'Erreur validation email :',
+      err
+    );
+
+    return res.status(500).json({
+      message: 'Erreur validation.',
+    });
   }
 });
 
