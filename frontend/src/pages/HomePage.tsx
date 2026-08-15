@@ -368,46 +368,59 @@ export default function HomePage() {
             <div className="about-content">
               <p className="section-kicker">À PROPOS</p>
 
-              <h2>{t.aboutTitle}</h2>
+              <p>
+                Passionné depuis mon adolescence par les technologies, 
+                et après une carrière passionnante dans un autre domaine
+                , j'ai choisi il y a quelques années de revenir à mes 
+                premières amours en devenant un professionnel de l'informatique.
+              </p>
 
-              <p>{t.aboutText}</p>
+              <p>
+                Avec une bonne base de développeur full stack et d'administrateur
+                systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité 
+                opérationnelle et le DevOps. Pour moi, ils constituent le prolongement naturel de
+                l'administration d'infrastructures sécurisées, avec cette couche
+                d'abstraction et de code qui m'a toujours fasciné.
+              </p>
 
-              <p>{t.aboutText2}</p>
+              <p>
+                Quoi de mieux que d'en parler, de documenter ce que je construis et 
+                d'échanger avec d'autres passionnés ? C'est dans cette esprit que 
+                j'ai créé DevOpsNotes, un blog technique et communautaire consacré 
+                aux technologies qui m'intéressent et aux expérimentations que je mène
+                dans un premier temps mais qui a vocation à s'ouvrir à d'autres contributeurs.
+              </p>
+
+              <p>
+                Parmi ces expérimentations figure notamment <strong>K-Guard</strong>,
+                mon projet consacré à la sécurisation, à l'observabilité et à la
+                gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes
+                expérimentations et des problématiques que je rencontre.
+              </p>
 
               <div className="sponsor-block">
-                <h3>
-                  {lang === 'FR'
-                    ? 'Soutenir le projet'
-                    : 'Support the project'}
-                </h3>
+                <h3>Soutenir le projet</h3>
 
                 <p>
-                  {lang === 'FR'
-                    ? "DevOpsNotes est développé et maintenu sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors."
-                    : "DevOpsNotes is developed and maintained in my free time. If you enjoy the project, its articles or the experiments presented here, you can help support its continued development through GitHub Sponsors."}
+                  DevOpsNotes et ses expérimentations sont développés et maintenus
+                  sur mon temps libre. Si vous appréciez le projet, les articles ou
+                  les expérimentations présentées ici, vous pouvez contribuer à leur
+                  poursuite via GitHub Sponsors.
                 </p>
 
                 <p>
-                  {lang === 'FR'
-                    ? "Votre soutien permet notamment de continuer à développer K-Guard, expérimenter de nouvelles technologies et maintenir l'infrastructure du projet."
-                    : "Your support helps me continue developing K-Guard, experimenting with new technologies and maintaining the project's infrastructure."}
+                  Votre soutien permet notamment de continuer à développer K-Guard,
+                  à expérimenter de nouvelles technologies et à maintenir
+                  l'infrastructure qui fait fonctionner DevOpsNotes.
                 </p>
 
                 <div
                   className="sponsor-card"
-                  aria-label={
-                    lang === 'FR'
-                      ? 'Soutenir DevOpsNotes via GitHub Sponsors'
-                      : 'Support DevOpsNotes through GitHub Sponsors'
-                  }
+                  aria-label="Soutenir DevOpsNotes via GitHub Sponsors"
                 >
                   <iframe
                     src="https://github.com/sponsors/KamouloxPelvis/card"
-                    title={
-                      lang === 'FR'
-                        ? 'Soutenir KamouloxPelvis'
-                        : 'Sponsor KamouloxPelvis'
-                    }
+                    title="Sponsor KamouloxPelvis"
                     height="225"
                     width="600"
                     style={{
@@ -423,7 +436,7 @@ export default function HomePage() {
                   href="https://devopsnotes.org"
                   className="btn btn-primary landing-btn"
                 >
-                  {t.portfolio}
+                  Mon portfolio
                 </a>
 
                 <a
@@ -432,9 +445,13 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="btn btn-outline-dark landing-btn"
                 >
-                  {t.repo}
+                  Mes projets
                 </a>
               </div>
+
+              <p className="about-signature">
+                Kamal Guidadou
+              </p>
             </div>
           </div>
         </section>
