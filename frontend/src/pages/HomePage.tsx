@@ -618,14 +618,12 @@ export default function HomePage() {
                     {t.aboutIntro}
                   </p>
 
+                  <p>
+                    {t.aboutDevopsNotes}
+                  </p>
+
                 </div>
-
               </div>
-
-              {/* DEVOPSNOTES */}
-              <p>
-                {t.aboutDevopsNotes}
-              </p>
 
               {/* K-GUARD + SCREENSHOT */}
               <div className="about-kguard">
