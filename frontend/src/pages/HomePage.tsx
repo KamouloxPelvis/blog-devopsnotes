@@ -44,14 +44,14 @@ export default function HomePage() {
         'Articles techniques, expérimentations et retours d’expérience autour du DevOps, du Cloud, de Kubernetes et de la cybersécurité.',
 
       intro:
-        'DevOpsNotes est un blog technique et un laboratoire d’expérimentation consacré aux infrastructures modernes, à l’automatisation et à la sécurité des environnements Cloud-Native.',
+        'DevopsNotes est un blog technique et un laboratoire d’expérimentation consacré aux infrastructures modernes, à l’automatisation et à la sécurité des environnements Cloud-Native.',
 
       intro2:
         'Le site documente des projets et des expérimentations concrètes autour du développement, du déploiement, de l’administration systèmes et réseaux, du CI/CD, de Kubernetes et du DevSecOps.',
 
       latestTitle: 'Derniers articles',
       latestDescription:
-        'Découvrez les dernières expérimentations et publications techniques de DevOpsNotes.',
+        'Découvrez les dernières expérimentations et publications techniques de DevopsNotes.',
       allArticles: 'Explorez le blog',
       readArticle: "Lire l'article →",
       loading: 'Chargement des articles...',
@@ -59,7 +59,7 @@ export default function HomePage() {
 
       labTitle: 'Un laboratoire technique en production',
       labText:
-        "DevOpsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
+        "DevopsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
 
       communityText:
         "Mais l'expérimentation ne s'arrête pas au code. Inscrivez-vous pour réagir aux articles, partager vos retours et vos propres expériences dans le forum, ou simplement discuter avec la communauté via le chat.",
@@ -68,9 +68,9 @@ export default function HomePage() {
       discoverForum: 'Découvrir le forum →',
       chat: 'Discuter sur le chat →',
 
-      aboutTitle: 'À propos de DevOpsNotes',
+      aboutTitle: 'À propos de DevopsNotes',
       aboutText:
-        'DevOpsNotes est conçu et maintenu par Kamal Guidadou comme un projet personnel permettant de mettre en pratique et de documenter des compétences en administration systèmes et réseaux, infrastructure Cloud, DevOps et DevSecOps.',
+        'DevopsNotes est conçu et maintenu par Kamal Guidadou comme un projet personnel permettant de mettre en pratique et de documenter des compétences en administration systèmes et réseaux, infrastructure Cloud, DevOps et DevSecOps.',
       aboutText2:
         "Les articles publiés sur ce blog documentent les problèmes rencontrés, les choix techniques, les solutions mises en œuvre et les expérimentations réalisées sur l'infrastructure.",
 
@@ -89,14 +89,14 @@ export default function HomePage() {
         'Technical articles, experiments and field notes about DevOps, Cloud, Kubernetes and cybersecurity.',
 
       intro:
-        'DevOpsNotes is a technical blog and experimentation lab focused on modern infrastructure, automation and Cloud-Native security.',
+        'DevopsNotes is a technical blog and experimentation lab focused on modern infrastructure, automation and Cloud-Native security.',
 
       intro2:
         'The website documents concrete projects and experiments covering software development, deployment, systems and network administration, CI/CD, Kubernetes and DevSecOps.',
 
       latestTitle: 'Latest articles',
       latestDescription:
-        'Discover the latest technical experiments and publications from DevOpsNotes.',
+        'Discover the latest technical experiments and publications from DevopsNotes.',
       allArticles: 'View all articles →',
       readArticle: 'Read article →',
       loading: 'Loading articles...',
@@ -366,7 +366,17 @@ export default function HomePage() {
         <section className="home-section about-section">
           <div className="about-grid">
             <div className="about-content">
-              <p className="section-kicker">À PROPOS</p>
+            <p className="section-kicker">À PROPOS</p>
+
+            <div className="about-intro">
+              <div className="about-photo">
+                <img
+                  src="/moi.webp"
+                  alt="Kamal Guidadou"
+                />
+              </div>
+
+            <div className="about-intro-content"></div>
 
               <p>
                 Passionné depuis mon adolescence par les technologies, 
@@ -377,16 +387,16 @@ export default function HomePage() {
 
               <p>
                 Avec une bonne base de développeur full stack et d'administrateur
-                systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité 
-                opérationnelle et le DevOps. Pour moi, ils constituent le prolongement naturel de
-                l'administration d'infrastructures sécurisées, avec cette couche
-                d'abstraction et de code qui m'a toujours fasciné.
+                systèmes et réseaux, j'ai décidé de m'orienter vers 
+                la sécurité opérationnelle et le DevOps. Pour moi, ils constituent 
+                le prolongement naturel de l'administration d'infrastructures sécurisées, 
+                avec cette couche d'abstraction et de code qui m'a toujours fasciné.
               </p>
 
               <p>
                 Quoi de mieux que d'en parler, de documenter ce que je construis et 
                 d'échanger avec d'autres passionnés ? C'est dans cette esprit que 
-                j'ai créé DevOpsNotes, un blog technique et communautaire consacré 
+                j'ai créé DevopsNotes, un blog technique et communautaire consacré 
                 aux technologies qui m'intéressent et aux expérimentations que je mène
                 dans un premier temps mais qui a vocation à s'ouvrir à d'autres contributeurs.
               </p>
@@ -402,7 +412,7 @@ export default function HomePage() {
                 <h3>Soutenir le projet</h3>
 
                 <p>
-                  DevOpsNotes et ses expérimentations sont développés et maintenus
+                  DevopsNotes et ses expérimentations sont développés et maintenus
                   sur mon temps libre. Si vous appréciez le projet, les articles ou
                   les expérimentations présentées ici, vous pouvez contribuer à leur
                   poursuite via GitHub Sponsors.
@@ -411,12 +421,12 @@ export default function HomePage() {
                 <p>
                   Votre soutien permet notamment de continuer à développer K-Guard,
                   à expérimenter de nouvelles technologies et à maintenir
-                  l'infrastructure qui fait fonctionner DevOpsNotes.
+                  l'infrastructure qui fait fonctionner DevopsNotes.
                 </p>
 
                 <div
                   className="sponsor-card"
-                  aria-label="Soutenir DevOpsNotes via GitHub Sponsors"
+                  aria-label="Soutenir DevopsNotes via GitHub Sponsors"
                 >
                   <iframe
                     src="https://github.com/sponsors/KamouloxPelvis/card"
@@ -454,7 +464,8 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* TECHNOLOGIES */}
         <section className="home-section technologies-section">
