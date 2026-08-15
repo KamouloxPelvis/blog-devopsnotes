@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useAllArticles } from '../hooks/useAllArticles';
+import api from '../api/axios';
 import { Article } from '../types/articles';
 import '../styles/HomePage.css';
 
 const R2_PUBLIC_URL =
-  process.env.REACT_APP_R2_PUBLIC_URL ?? 'https://resources.devopsnotes.org';
+  process.env.REACT_APP_R2_PUBLIC_URL ??
+  'https://resources.devopsnotes.org';
 
 const stripHtml = (html: string): string => {
   if (!html) return '';
 
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  
+  const doc = new DOMParser().parseFromString(
+    html,
+    'text/html'
+  );
+
   return (doc.body.textContent || '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -35,11 +39,46 @@ const getExcerpt = (article: Article): string => {
 export default function HomePage() {
   const [lang, setLang] = useState<'FR' | 'EN'>('FR');
 
-  const { articles, loading } = useAllArticles(1, 3);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLatestArticles = async () => {
+      try {
+        setLoading(true);
+
+        const response = await api.get(
+          '/articles?page=1&limit=3'
+        );
+
+        if (
+          response.data &&
+          Array.isArray(response.data.items)
+        ) {
+          setArticles(response.data.items);
+        } else if (Array.isArray(response.data)) {
+          setArticles(response.data.slice(0, 3));
+        } else {
+          setArticles([]);
+        }
+      } catch (error) {
+        console.error(
+          'Erreur lors du chargement des derniers articles:',
+          error
+        );
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestArticles();
+  }, []);
 
   const content = {
     FR: {
       title: 'Blog DevOps, DevSecOps & Cloud',
+
       subtitle:
         'Articles techniques, expérimentations et retours d’expérience autour du DevOps, du Cloud, de Kubernetes et de la cybersécurité.',
 
@@ -50,41 +89,78 @@ export default function HomePage() {
         'Le site documente des projets et des expérimentations concrètes autour du développement, du déploiement, de l’administration systèmes et réseaux, du CI/CD, de Kubernetes et du DevSecOps.',
 
       latestTitle: 'Derniers articles',
+
       latestDescription:
         'Découvrez les dernières expérimentations et publications techniques de DevopsNotes.',
-      allArticles: 'Explorez le blog',
-      readArticle: "Lire l'article →",
-      loading: 'Chargement des articles...',
-      noArticles: 'Aucun article publié pour le moment.',
 
-      labTitle: 'Un laboratoire technique en production',
+      allArticles: 'Explorez le blog',
+
+      readArticle: "Lire l'article →",
+
+      loading: 'Chargement des articles...',
+
+      noArticles:
+        'Aucun article publié pour le moment.',
+
+      labTitle:
+        'Un laboratoire technique en production',
+
       labText:
         "DevopsNotes n'est pas uniquement un espace de publication. L'application elle-même sert de terrain d'expérimentation : développement full-stack, conteneurisation, orchestration Kubernetes/K3s, CI/CD, reverse proxy, Cloudflare, observabilité et sécurisation de l'infrastructure.",
 
       communityText:
         "Mais l'expérimentation ne s'arrête pas au code. Inscrivez-vous pour réagir aux articles, partager vos retours et vos propres expériences dans le forum, ou simplement discuter avec la communauté via le chat.",
 
-      joinCommunity: 'Rejoindre la communauté →',
-      discoverForum: 'Découvrir le forum →',
-      chat: 'Discuter sur le chat →',
+      joinCommunity:
+        'Rejoindre la communauté →',
 
-      aboutTitle: 'À propos de DevopsNotes',
-      aboutText:
-        'DevopsNotes est conçu et maintenu par Kamal Guidadou comme un projet personnel permettant de mettre en pratique et de documenter des compétences en administration systèmes et réseaux, infrastructure Cloud, DevOps et DevSecOps.',
-      aboutText2:
-        "Les articles publiés sur ce blog documentent les problèmes rencontrés, les choix techniques, les solutions mises en œuvre et les expérimentations réalisées sur l'infrastructure.",
+      discoverForum:
+        'Découvrir le forum →',
 
-      portfolio: 'Découvrez mon portfolio',
-      repo: 'Consultez le projet GitHub',
+      chat:
+        'Discuter sur le chat →',
 
-      techTitle: 'Technologies & infrastructure',
+      aboutTitle:
+        'À propos de DevopsNotes',
+
+      aboutIntro:
+        "Passionné depuis mon adolescence par les technologies, et après une carrière passionnante dans un autre domaine, j'ai choisi il y a quelques années de revenir à mes premières amours en devenant un professionnel de l'informatique.",
+
+      aboutIntro2:
+        "Avec une solide base de développeur full stack et d'administrateur systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité opérationnelle et le DevOps. Pour moi, ils constituent le prolongement naturel de l'administration d'infrastructures sécurisées, avec cette couche d'abstraction et de code qui m'a toujours fasciné.",
+
+      aboutDevopsNotes:
+        "Quoi de mieux que d'en parler, de documenter ce que je construis et d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai créé DevopsNotes, un blog technique et communautaire consacré aux technologies qui m'intéressent et aux expérimentations que je mène, dans un premier temps, mais qui a vocation à s'ouvrir à d'autres contributeurs.",
+
+      aboutKGuard:
+        "Parmi ces expérimentations figure notamment K-Guard, mon projet consacré à la sécurisation, à l'observabilité et à la gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes expérimentations et des problématiques que je rencontre.",
+
+      sponsorTitle:
+        'Soutenir le projet',
+
+      sponsorText:
+        'DevopsNotes et ses expérimentations sont développés et maintenus sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors.',
+
+      sponsorText2:
+        'Votre soutien permet notamment de continuer à développer K-Guard, à expérimenter de nouvelles technologies et à maintenir l’infrastructure qui fait fonctionner DevopsNotes.',
+
+      portfolio:
+        'Mon portfolio',
+
+      projects:
+        'Mes projets',
+
+      techTitle:
+        'Technologies & infrastructure',
 
       maintenance:
         'Des opérations de maintenance évolutive sur l’infrastructure et l’interface peuvent entraîner des indisponibilités temporaires.',
     },
 
     EN: {
-      title: 'DevOps, DevSecOps & Cloud Blog',
+      title:
+        'DevOps, DevSecOps & Cloud Blog',
+
       subtitle:
         'Technical articles, experiments and field notes about DevOps, Cloud, Kubernetes and cybersecurity.',
 
@@ -94,36 +170,74 @@ export default function HomePage() {
       intro2:
         'The website documents concrete projects and experiments covering software development, deployment, systems and network administration, CI/CD, Kubernetes and DevSecOps.',
 
-      latestTitle: 'Latest articles',
+      latestTitle:
+        'Latest articles',
+
       latestDescription:
         'Discover the latest technical experiments and publications from DevopsNotes.',
-      allArticles: 'View all articles →',
-      readArticle: 'Read article →',
-      loading: 'Loading articles...',
-      noArticles: 'No published articles yet.',
 
-      labTitle: 'A technical laboratory running in production',
+      allArticles:
+        'View all articles →',
+
+      readArticle:
+        'Read article →',
+
+      loading:
+        'Loading articles...',
+
+      noArticles:
+        'No published articles yet.',
+
+      labTitle:
+        'A technical laboratory running in production',
+
       labText:
-        'DevOpsNotes is not only a publishing platform. The application itself is an experimentation environment covering full-stack development, containerization, Kubernetes/K3s orchestration, CI/CD, reverse proxying, Cloudflare, observability and infrastructure security.',
+        'DevopsNotes is not only a publishing platform. The application itself is an experimentation environment covering full-stack development, containerization, Kubernetes/K3s orchestration, CI/CD, reverse proxying, Cloudflare, observability and infrastructure security.',
+
       communityText:
         'However, experimentation does not stop at the code. Sign up to comment on articles, share your feedback and experiences in the forum, or simply chat with the community.',
 
-      joinCommunity: 'Join the community →',
-      discoverForum: 'Discover the forum →',
-      chat: 'Chat with the community →',
+      joinCommunity:
+        'Join the community →',
 
-      aboutTitle: 'About DevOpsNotes',
-      aboutText:
-        'DevOpsNotes is designed and maintained by Kamal Guidadou as a personal project used to practice and document skills in systems and network administration, Cloud infrastructure, DevOps and DevSecOps.',
-      aboutText2:
-        'The articles published on this blog document technical problems, architectural decisions, implemented solutions and infrastructure experiments.',
+      discoverForum:
+        'Discover the forum →',
 
-      portfolio: 'View my portfolio →',
-      repo: 'View the GitLab project →',
+      chat:
+        'Chat with the community →',
 
-      techTitle: 'Technology & infrastructure',
-      techDescription:
-        'The blog is built with React, TypeScript, Node.js, Express, MongoDB, Docker, Kubernetes/K3s, GitLab CI/CD, Nginx, Cloudflare and Sentry.',
+      aboutTitle:
+        'About DevopsNotes',
+
+      aboutIntro:
+        'Passionate about technology since my teenage years, and after an exciting career in another field, I chose a few years ago to return to my first passion and become an IT professional.',
+
+      aboutIntro2:
+        'With a solid background in full-stack development and systems and network administration, I decided to focus on operational security and DevOps. To me, they are a natural extension of secure infrastructure administration, combined with the layer of abstraction and code that has always fascinated me.',
+
+      aboutDevopsNotes:
+        'What better way to pursue that interest than by documenting what I build and exchanging ideas with other enthusiasts? This is the spirit in which I created DevopsNotes, a technical and community-driven blog dedicated to the technologies that interest me and the experiments I conduct, with the ambition of eventually opening it to other contributors.',
+
+      aboutKGuard:
+        'Among these experiments is K-Guard, my project focused on security, observability and governance for Kubernetes/K3s clusters. It evolves alongside my experiments and the problems I encounter.',
+
+      sponsorTitle:
+        'Support the project',
+
+      sponsorText:
+        'DevopsNotes and its experiments are developed and maintained in my spare time. If you enjoy the project, the articles or the experiments presented here, you can help support their continuation through GitHub Sponsors.',
+
+      sponsorText2:
+        'Your support helps me continue developing K-Guard, experimenting with new technologies and maintaining the infrastructure that powers DevopsNotes.',
+
+      portfolio:
+        'My portfolio',
+
+      projects:
+        'My projects',
+
+      techTitle:
+        'Technology & infrastructure',
 
       maintenance:
         'Ongoing infrastructure and UI maintenance may occasionally cause temporary service interruptions.',
@@ -138,34 +252,47 @@ export default function HomePage() {
     return article.imageUrl.startsWith('http')
       ? article.imageUrl
       : `${R2_PUBLIC_URL}${
-          article.imageUrl.startsWith('/') ? '' : '/'
+          article.imageUrl.startsWith('/')
+            ? ''
+            : '/'
         }${article.imageUrl}`;
   };
-
 
   return (
     <>
       <Helmet>
         <title>{t.title}</title>
+
         <meta
           name="description"
-          content={t.subtitle + ' ' + t.intro}
+          content={`${t.subtitle} ${t.intro}`}
         />
+
         <link
           rel="canonical"
           href="https://blog.devopsnotes.org/"
         />
 
-        <meta property="og:title" content={t.title} />
+        <meta
+          property="og:title"
+          content={t.title}
+        />
+
         <meta
           property="og:description"
           content={t.subtitle}
         />
+
         <meta
           property="og:url"
           content="https://blog.devopsnotes.org/"
         />
-        <meta property="og:type" content="website" />
+
+        <meta
+          property="og:type"
+          content="website"
+        />
+
         <meta
           property="og:site_name"
           content="DevOpsNotes"
@@ -173,45 +300,77 @@ export default function HomePage() {
       </Helmet>
 
       <main className="landing-root">
-        <div className="lang-selector" aria-label="Language selector">
+
+        {/* LANGUAGE */}
+        <div
+          className="lang-selector"
+          aria-label="Language selector"
+        >
           <button
             aria-label="Français"
             onClick={() => setLang('FR')}
-            className={lang === 'FR' ? 'active' : ''}
+            className={
+              lang === 'FR'
+                ? 'active'
+                : ''
+            }
           >
-            <img src="/flags/fr.svg" alt="" />
+            <img
+              src="/flags/fr.svg"
+              alt=""
+            />
             FR
           </button>
 
           <button
             aria-label="English"
             onClick={() => setLang('EN')}
-            className={lang === 'EN' ? 'active' : ''}
+            className={
+              lang === 'EN'
+                ? 'active'
+                : ''
+            }
           >
-            <img src="/flags/us.svg" alt="" />
+            <img
+              src="/flags/us.svg"
+              alt=""
+            />
             EN
           </button>
         </div>
 
         {/* HERO */}
         <section className="landing-hero">
-          <p className="landing-kicker">DEVOPSNOTES</p>
 
-          <h1 className="landing-title">{t.title}</h1>
+          <p className="landing-kicker">
+            DEVOPSNOTES
+          </p>
+
+          <h1 className="landing-title">
+            {t.title}
+          </h1>
 
           <p className="landing-subtitle">
             {t.subtitle}
           </p>
 
           <div className="landing-description">
+
             <p>
-              <strong>DevOpsNotes</strong> {t.intro}
+              <strong>
+                DevOpsNotes
+              </strong>{' '}
+              {t.intro}
             </p>
 
-            <p>{t.intro2}</p>
+            <p>
+              {t.intro2}
+            </p>
+
           </div>
 
           <div className="landing-buttons">
+
             <Link
               to="/articles"
               className="btn btn-primary landing-btn"
@@ -236,18 +395,32 @@ export default function HomePage() {
                 src="/logos/github.png"
                 alt="GitHub"
               />
-              {t.repo}
+              {t.projects}
             </a>
+
           </div>
+
         </section>
 
         {/* ARTICLES */}
         <section className="home-section latest-section">
+
           <div className="section-heading">
+
             <div>
-              <p className="section-kicker">PUBLICATIONS</p>
-              <h2>{t.latestTitle}</h2>
-              <p>{t.latestDescription}</p>
+
+              <p className="section-kicker">
+                PUBLICATIONS
+              </p>
+
+              <h2>
+                {t.latestTitle}
+              </h2>
+
+              <p>
+                {t.latestDescription}
+              </p>
+
             </div>
 
             <Link
@@ -256,88 +429,145 @@ export default function HomePage() {
             >
               {t.allArticles}
             </Link>
+
           </div>
 
           {loading ? (
+
             <div className="articles-loading">
               {t.loading}
             </div>
+
           ) : articles.length === 0 ? (
+
             <div className="articles-empty">
               {t.noArticles}
             </div>
+
           ) : (
+
             <div className="home-articles-grid">
-              {articles.slice(0, 3).map((article) => {
-                const imageUrl = getImageUrl(article);
 
-                return (
-                  <article
-                    key={article._id}
-                    className="home-article-card"
-                  >
-                    <Link
-                      to={`/articles/${article.slug}`}
-                      className="home-article-image"
+              {articles
+                .slice(0, 3)
+                .map((article) => {
+
+                  const imageUrl =
+                    getImageUrl(article);
+
+                  return (
+                    <article
+                      key={article._id}
+                      className="home-article-card"
                     >
-                      {imageUrl ? (
-                        <img
-                          src={imageUrl}
-                          alt={article.title}
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="home-article-image-fallback">
-                          DevOpsNotes
-                        </div>
-                      )}
-                    </Link>
-
-                    <div className="home-article-content">
-                      <div className="home-article-tags">
-                        {(article.tags || [])
-                          .slice(0, 3)
-                          .map((tag) => (
-                            <span key={tag}>#{tag}</span>
-                          ))}
-                      </div>
-
-                      <h3>
-                        <Link
-                          to={`/articles/${article.slug}`}
-                        >
-                          {article.title}
-                        </Link>
-                      </h3>
-
-                      <p>{getExcerpt(article)}</p>
 
                       <Link
                         to={`/articles/${article.slug}`}
-                        className="home-article-link"
+                        className="home-article-image"
                       >
-                        {t.readArticle}
+                        {imageUrl ? (
+
+                          <img
+                            src={imageUrl}
+                            alt={article.title}
+                            loading="lazy"
+                          />
+
+                        ) : (
+
+                          <div className="home-article-image-fallback">
+                            DevOpsNotes
+                          </div>
+
+                        )}
                       </Link>
-                    </div>
-                  </article>
-                );
-              })}
+
+                      <div className="home-article-content">
+
+                        <div className="home-article-tags">
+
+                          {(article.tags || [])
+                            .slice(0, 3)
+                            .map((tag) => (
+                              <span key={tag}>
+                                #{tag}
+                              </span>
+                            ))}
+
+                        </div>
+
+                        <h3>
+                          <Link
+                            to={`/articles/${article.slug}`}
+                          >
+                            {article.title}
+                          </Link>
+                        </h3>
+
+                        <p>
+                          {getExcerpt(article)}
+                        </p>
+
+                        <Link
+                          to={`/articles/${article.slug}`}
+                          className="home-article-link"
+                        >
+                          {t.readArticle}
+                        </Link>
+
+                      </div>
+
+                    </article>
+                  );
+                })}
+
             </div>
+
           )}
+
         </section>
 
-        {/* LAB */}
+        {/* LABORATOIRE */}
         <section className="home-section lab-section">
+
           <div className="content-panel">
-            <p className="section-kicker">EXPERIMENTATION</p>
 
-            <h2>{t.labTitle}</h2>
+            <p className="section-kicker">
+              EXPERIMENTATION
+            </p>
 
-            <p>{t.labText}</p>
+            <h2>
+              {t.labTitle}
+            </h2>
 
-            <p>{t.communityText}</p>
+            <div className="lab-content-grid">
+
+              <div className="lab-text">
+
+                <p>
+                  {t.labText}
+                </p>
+
+                <p>
+                  {t.communityText}
+                </p>
+
+              </div>
+
+              <div className="lab-screenshot">
+
+                <img
+                  src="/screenshot_home_1.webp"
+                  alt="Forum communautaire DevOpsNotes"
+                  loading="lazy"
+                />
+
+              </div>
+
+            </div>
 
             <div className="about-actions">
+
               <Link
                 to="/signup"
                 className="btn btn-primary landing-btn"
@@ -358,84 +588,98 @@ export default function HomePage() {
               >
                 {t.chat}
               </Link>
+
             </div>
+
           </div>
+
         </section>
 
         {/* ABOUT & SPONSOR */}
         <section className="home-section about-section">
+
           <div className="about-grid">
+
             <div className="about-content">
 
-              <p className="section-kicker">À PROPOS</p>
+              <p className="section-kicker">
+                À PROPOS
+              </p>
 
-              {/* Présentation personnelle */}
+              {/* INTRODUCTION */}
               <div className="about-intro">
+
                 <div className="about-photo">
+
                   <img
                     src="/moi.webp"
                     alt="Kamal Guidadou"
                   />
+
                 </div>
 
                 <div className="about-intro-content">
+
                   <p>
-                    Passionné depuis mon adolescence par les technologies, et après
-                    une carrière passionnante dans un autre domaine, j'ai choisi il y
-                    a quelques années de revenir à mes premières amours en devenant
-                    un professionnel de l'informatique.
+                    {t.aboutIntro}
                   </p>
 
                   <p>
-                    Avec une bonne base de développeur full stack et d'administrateur
-                    systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité
-                    opérationnelle et le DevOps. Pour moi, ils constituent le
-                    prolongement naturel de l'administration d'infrastructures
-                    sécurisées, avec cette couche d'abstraction et de code qui m'a
-                    toujours fasciné.
+                    {t.aboutIntro2}
                   </p>
+
                 </div>
+
               </div>
 
-              {/* Naissance de DevOpsNotes */}
+              {/* DEVOPSNOTES */}
               <p>
-                Quoi de mieux que d'en parler, de documenter ce que je construis et
-                d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai
-                créé DevopsNotes, un blog technique et communautaire consacré aux
-                technologies qui m'intéressent et aux expérimentations que je mène,
-                dans un premier temps, mais qui a vocation à s'ouvrir à d'autres
-                contributeurs.
+                {t.aboutDevopsNotes}
               </p>
 
-              {/* K-Guard */}
-              <p>
-                Parmi ces expérimentations figure notamment <strong>K-Guard</strong>,
-                mon projet consacré à la sécurisation, à l'observabilité et à la
-                gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes
-                expérimentations et des problématiques que je rencontre.
-              </p>
+              {/* K-GUARD + SCREENSHOT */}
+              <div className="about-kguard">
 
-              {/* Sponsor */}
+                <div className="about-kguard-text">
+
+                  <p>
+                    {t.aboutKGuard}
+                  </p>
+
+                </div>
+
+                <div className="about-kguard-screenshot">
+
+                  <img
+                    src="/screenshot_home_2.webp"
+                    alt="K-Guard, projet de sécurité et de gouvernance Kubernetes et K3s"
+                    loading="lazy"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* SPONSOR */}
               <div className="sponsor-block">
-                <h3>Soutenir le projet</h3>
+
+                <h3>
+                  {t.sponsorTitle}
+                </h3>
 
                 <p>
-                  DevopsNotes et ses expérimentations sont développés et maintenus
-                  sur mon temps libre. Si vous appréciez le projet, les articles ou
-                  les expérimentations présentées ici, vous pouvez contribuer à leur
-                  poursuite via GitHub Sponsors.
+                  {t.sponsorText}
                 </p>
 
                 <p>
-                  Votre soutien permet notamment de continuer à développer K-Guard,
-                  à expérimenter de nouvelles technologies et à maintenir
-                  l'infrastructure qui fait fonctionner DevopsNotes.
+                  {t.sponsorText2}
                 </p>
 
                 <div
                   className="sponsor-card"
                   aria-label="Soutenir DevopsNotes via GitHub Sponsors"
                 >
+
                   <iframe
                     src="https://github.com/sponsors/KamouloxPelvis/card"
                     title="Sponsor KamouloxPelvis"
@@ -446,16 +690,19 @@ export default function HomePage() {
                       maxWidth: '100%',
                     }}
                   />
+
                 </div>
+
               </div>
 
-              {/* Actions */}
+              {/* ACTIONS */}
               <div className="about-actions">
+
                 <a
                   href="https://devopsnotes.org"
                   className="btn btn-primary landing-btn"
                 >
-                  Mon portfolio
+                  {t.portfolio}
                 </a>
 
                 <a
@@ -464,29 +711,39 @@ export default function HomePage() {
                   rel="noopener noreferrer"
                   className="btn btn-outline-dark landing-btn"
                 >
-                  Mes projets
+                  {t.projects}
                 </a>
+
               </div>
 
-              {/* Signature */}
+              {/* SIGNATURE */}
               <p className="about-signature">
                 Kamal Guidadou
               </p>
 
             </div>
+
           </div>
+
         </section>
 
         {/* TECHNOLOGIES */}
         <section className="home-section technologies-section">
-          <div className="section-heading centered">
-            <p className="section-kicker">STACK</p>
 
-            <h2>{t.techTitle}</h2>
-            
+          <div className="section-heading centered">
+
+            <p className="section-kicker">
+              STACK
+            </p>
+
+            <h2>
+              {t.techTitle}
+            </h2>
+
           </div>
 
           <div className="landing-tech-grid">
+
             <img
               src="/logos/react.webp"
               alt="React"
@@ -558,12 +815,17 @@ export default function HomePage() {
               alt="Sentry"
               title="Sentry Monitoring"
             />
+
           </div>
+
         </section>
 
+        {/* MAINTENANCE */}
         <p className="beta-notice">
-          ⚠️ <strong>Note :</strong> {t.maintenance}
+          ⚠️ <strong>Note :</strong>{' '}
+          {t.maintenance}
         </p>
+
       </main>
     </>
   );

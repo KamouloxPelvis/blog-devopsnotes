@@ -456,6 +456,112 @@
   margin-top: 0;
 }
 
+/* ============================================================
+   LABORATOIRE — TEXTE + SCREENSHOT FORUM
+   ============================================================ */
+
+.lab-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 42%);
+  gap: 2.5rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.lab-text {
+  min-width: 0;
+}
+
+.lab-text p {
+  margin: 0 0 1.25rem;
+}
+
+.lab-text p:last-child {
+  margin-bottom: 0;
+}
+
+.lab-screenshot {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.lab-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ============================================================
+   À PROPOS — K-GUARD + SCREENSHOT
+   ============================================================ */
+
+.about-kguard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 40%);
+  gap: 2.5rem;
+  align-items: center;
+  margin-top: 1.75rem;
+}
+
+.about-kguard-text {
+  min-width: 0;
+}
+
+.about-kguard-text p {
+  margin: 0;
+}
+
+.about-kguard-screenshot {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.about-kguard-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .lab-content-grid,
+  .about-kguard {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .lab-screenshot,
+  .about-kguard-screenshot {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .lab-content-grid,
+  .about-kguard {
+    gap: 1.25rem;
+  }
+
+  .lab-screenshot,
+  .about-kguard-screenshot {
+    border-radius: 10px;
+  }
+}
+
 /* =========================================================
    SPONSOR
    ========================================================= */
