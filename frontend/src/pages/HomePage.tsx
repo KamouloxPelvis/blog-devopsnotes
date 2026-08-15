@@ -135,7 +135,7 @@ export default function HomePage() {
         'Soutenir le projet',
 
       sponsorText:
-        'L&apos;écosystème DevopsNotes et K-Guard sont maintenus sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors.',
+        "L'écosystème DevopsNotes et K-Guard sont maintenus sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors.",
 
       sponsorText2:
         'Votre soutien permet notamment de continuer à développer K-Guard, à expérimenter de nouvelles technologies et à maintenir l’infrastructure qui fait fonctionner DevopsNotes.',
