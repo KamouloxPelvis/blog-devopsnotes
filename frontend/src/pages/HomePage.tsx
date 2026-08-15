@@ -173,16 +173,19 @@ export default function HomePage() {
         'Discover the latest technical experiments and publications from DevopsNotes.',
 
       allArticles:
-        'View all articles →',
+        'Explore the blog',
 
       readArticle:
-        'Read article →',
+        'Read the article →',
 
       loading:
         'Loading articles...',
 
       noArticles:
         'No published articles yet.',
+
+      labKicker:
+        'EXPERIMENTATION',
 
       labTitle:
         'A technical laboratory running in production',
@@ -203,16 +206,13 @@ export default function HomePage() {
         'Chat with the community →',
 
       aboutTitle:
-        'About DevopsNotes',
+        'ABOUT',
 
       aboutIntro:
-        'Passionate about technology since my teenage years, and after an exciting career in another field, I chose a few years ago to return to my first passion and become an IT professional.',
-
-      aboutIntro2:
-        'With a solid background in full-stack development and systems and network administration, I decided to focus on operational security and DevOps. To me, they are a natural extension of secure infrastructure administration, combined with the layer of abstraction and code that has always fascinated me.',
+        'With a solid background in full-stack development and systems and network administration, and a passion for IT and technology in the broadest sense, I recently chose to focus on operational security and DevOps. To me, they are a natural extension of secure infrastructure administration, combined with the layer of abstraction and code that has always fascinated me.',
 
       aboutDevopsNotes:
-        'What better way to pursue that interest than by documenting what I build and exchanging ideas with other enthusiasts? This is the spirit in which I created DevopsNotes, a technical and community-driven blog dedicated to the technologies that interest me and the experiments I conduct, with the ambition of eventually opening it to other contributors.',
+        'What better way to talk about it, document what I build and exchange ideas with other enthusiasts? This is the spirit in which I created DevopsNotes, a technical and community-driven blog that accompanies me in my experiments and aims to encourage sharing with other contributors.',
 
       aboutKGuard:
         'Among these experiments is K-Guard, my project focused on security, observability and governance for Kubernetes/K3s clusters. It evolves alongside my experiments and the problems I encounter.',
@@ -221,7 +221,7 @@ export default function HomePage() {
         'Support the project',
 
       sponsorText:
-        'DevopsNotes and its experiments are developed and maintained in my spare time. If you enjoy the project, the articles or the experiments presented here, you can help support their continuation through GitHub Sponsors.',
+        'The DevopsNotes ecosystem and K-Guard are maintained in my spare time. If you enjoy the project, the articles or the experiments presented here, you can help support their continuation through GitHub Sponsors.',
 
       sponsorText2:
         'Your support helps me continue developing K-Guard, experimenting with new technologies and maintaining the infrastructure that powers DevopsNotes.',
@@ -231,6 +231,9 @@ export default function HomePage() {
 
       projects:
         'My projects',
+
+      techKicker:
+        'STACK',
 
       techTitle:
         'Technology & infrastructure',
