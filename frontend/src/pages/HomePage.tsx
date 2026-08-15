@@ -366,41 +366,48 @@ export default function HomePage() {
         <section className="home-section about-section">
           <div className="about-grid">
             <div className="about-content">
-            <p className="section-kicker">À PROPOS</p>
 
-            <div className="about-intro">
-              <div className="about-photo">
-                <img
-                  src="/moi.webp"
-                  alt="Kamal Guidadou"
-                />
+              <p className="section-kicker">À PROPOS</p>
+
+              {/* Présentation personnelle */}
+              <div className="about-intro">
+                <div className="about-photo">
+                  <img
+                    src="/moi.webp"
+                    alt="Kamal Guidadou"
+                  />
+                </div>
+
+                <div className="about-intro-content">
+                  <p>
+                    Passionné depuis mon adolescence par les technologies, et après
+                    une carrière passionnante dans un autre domaine, j'ai choisi il y
+                    a quelques années de revenir à mes premières amours en devenant
+                    un professionnel de l'informatique.
+                  </p>
+
+                  <p>
+                    Avec une bonne base de développeur full stack et d'administrateur
+                    systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité
+                    opérationnelle et le DevOps. Pour moi, ils constituent le
+                    prolongement naturel de l'administration d'infrastructures
+                    sécurisées, avec cette couche d'abstraction et de code qui m'a
+                    toujours fasciné.
+                  </p>
+                </div>
               </div>
 
-            <div className="about-intro-content"></div>
-
+              {/* Naissance de DevOpsNotes */}
               <p>
-                Passionné depuis mon adolescence par les technologies, 
-                et après une carrière passionnante dans un autre domaine
-                , j'ai choisi il y a quelques années de revenir à mes 
-                premières amours en devenant un professionnel de l'informatique.
+                Quoi de mieux que d'en parler, de documenter ce que je construis et
+                d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai
+                créé DevopsNotes, un blog technique et communautaire consacré aux
+                technologies qui m'intéressent et aux expérimentations que je mène,
+                dans un premier temps, mais qui a vocation à s'ouvrir à d'autres
+                contributeurs.
               </p>
 
-              <p>
-                Avec une bonne base de développeur full stack et d'administrateur
-                systèmes et réseaux, j'ai décidé de m'orienter vers 
-                la sécurité opérationnelle et le DevOps. Pour moi, ils constituent 
-                le prolongement naturel de l'administration d'infrastructures sécurisées, 
-                avec cette couche d'abstraction et de code qui m'a toujours fasciné.
-              </p>
-
-              <p>
-                Quoi de mieux que d'en parler, de documenter ce que je construis et 
-                d'échanger avec d'autres passionnés ? C'est dans cette esprit que 
-                j'ai créé DevopsNotes, un blog technique et communautaire consacré 
-                aux technologies qui m'intéressent et aux expérimentations que je mène
-                dans un premier temps mais qui a vocation à s'ouvrir à d'autres contributeurs.
-              </p>
-
+              {/* K-Guard */}
               <p>
                 Parmi ces expérimentations figure notamment <strong>K-Guard</strong>,
                 mon projet consacré à la sécurisation, à l'observabilité et à la
@@ -408,6 +415,7 @@ export default function HomePage() {
                 expérimentations et des problématiques que je rencontre.
               </p>
 
+              {/* Sponsor */}
               <div className="sponsor-block">
                 <h3>Soutenir le projet</h3>
 
@@ -441,6 +449,7 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* Actions */}
               <div className="about-actions">
                 <a
                   href="https://devopsnotes.org"
@@ -459,13 +468,14 @@ export default function HomePage() {
                 </a>
               </div>
 
+              {/* Signature */}
               <p className="about-signature">
                 Kamal Guidadou
               </p>
+
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
         {/* TECHNOLOGIES */}
         <section className="home-section technologies-section">
