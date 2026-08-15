@@ -429,10 +429,37 @@
 
 .about-intro {
   display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 2rem;
   align-items: start;
-  margin-bottom: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.about-intro-text {
+  min-width: 0;
+}
+
+.about-intro-text p {
+  margin: 0 0 1.25rem;
+}
+
+.about-intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+.about-intro > .about-photo {
+  width: 190px;
+}
+
+.about-intro > .about-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+}
+
+.about-intro + p {
+  margin-top: 2rem;
 }
 
 .about-photo {
@@ -584,17 +611,16 @@
 }
 
 .sponsor-card {
-  width: 100%;
-  max-width: 600px;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
+  height: 120px;
+  overflow: hidden;
 }
 
 .sponsor-card iframe {
   display: block;
   width: 100%;
-  max-width: 600px;
+  height: 120px;
   border: 0;
-  border-radius: 8px;
 }
 
 /* =========================================================

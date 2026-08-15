@@ -122,15 +122,11 @@ export default function HomePage() {
 
       aboutTitle:
         'À propos de DevopsNotes',
-
       aboutIntro:
-        "Passionné depuis mon adolescence par les technologies, et après une carrière passionnante dans un autre domaine, j'ai choisi il y a quelques années de revenir à mes premières amours en devenant un professionnel de l'informatique.",
-
-      aboutIntro2:
-        "Avec une solide base de développeur full stack et d'administrateur systèmes et réseaux, j'ai décidé de m'orienter vers la sécurité opérationnelle et le DevOps. Pour moi, ils constituent le prolongement naturel de l'administration d'infrastructures sécurisées, avec cette couche d'abstraction et de code qui m'a toujours fasciné.",
+        "Avec une solide base de développeur full stack et d'administrateur systèmes et réseaux et passionné d'informatique et de technologies au sens large, j'ai récemment fait le choix de m'orienter vers la sécurité opérationnelle et le DevOps. Pour moi, ils constituent le prolongement naturel de l'administration d'infrastructures sécurisées, avec cette couche d'abstraction et de code qui m'a toujours fasciné.",
 
       aboutDevopsNotes:
-        "Quoi de mieux que d'en parler, de documenter ce que je construis et d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai créé DevopsNotes, un blog technique et communautaire consacré aux technologies qui m'intéressent et aux expérimentations que je mène, dans un premier temps, mais qui a vocation à s'ouvrir à d'autres contributeurs.",
+        "Quoi de mieux que d'en parler, de documenter ce que je construis et d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai créé DevopsNotes, un blog technique et communautaire qui m'accompagne dans mes expérimentations que je mène et qui a vocation au partage avec d'autres contributeurs.",
 
       aboutKGuard:
         "Parmi ces expérimentations figure notamment K-Guard, mon projet consacré à la sécurisation, à l'observabilité et à la gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes expérimentations et des problématiques que je rencontre.",
@@ -139,7 +135,7 @@ export default function HomePage() {
         'Soutenir le projet',
 
       sponsorText:
-        'DevopsNotes et ses expérimentations sont développés et maintenus sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors.',
+        'L&apos;écosystème DevopsNotes et K-Guard sont maintenus sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors.',
 
       sponsorText2:
         'Votre soutien permet notamment de continuer à développer K-Guard, à expérimenter de nouvelles technologies et à maintenir l’infrastructure qui fait fonctionner DevopsNotes.',
@@ -610,22 +606,16 @@ export default function HomePage() {
               <div className="about-intro">
 
                 <div className="about-photo">
-
                   <img
                     src="/moi.webp"
                     alt="Kamal Guidadou"
                   />
-
                 </div>
 
-                <div className="about-intro-content">
+                <div className="about-intro-text">
 
                   <p>
                     {t.aboutIntro}
-                  </p>
-
-                  <p>
-                    {t.aboutIntro2}
                   </p>
 
                 </div>
@@ -644,6 +634,10 @@ export default function HomePage() {
 
                   <p>
                     {t.aboutKGuard}
+                  </p>
+
+                  <p className="about-signature">
+                    Kamal Guidadou
                   </p>
 
                 </div>
@@ -679,7 +673,6 @@ export default function HomePage() {
                   className="sponsor-card"
                   aria-label="Soutenir DevopsNotes via GitHub Sponsors"
                 >
-
                   <iframe
                     src="https://github.com/sponsors/KamouloxPelvis/card"
                     title="Sponsor KamouloxPelvis"
@@ -690,7 +683,6 @@ export default function HomePage() {
                       maxWidth: '100%',
                     }}
                   />
-
                 </div>
 
               </div>
@@ -715,11 +707,6 @@ export default function HomePage() {
                 </a>
 
               </div>
-
-              {/* SIGNATURE */}
-              <p className="about-signature">
-                Kamal Guidadou
-              </p>
 
             </div>
 
