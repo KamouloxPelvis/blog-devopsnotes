@@ -40,7 +40,82 @@ export const getArticleBySlug = async (req: Request, res: Response) => {
   }
 };
 
-// 3. LOGIQUE DES LIKES (Unique & Toggle)
+// Récupérer les articles associés à partir des tags
+export const getRelatedArticles = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { slug } = req.params;
+
+    const currentArticle = await Article.findOne({
+      slug,
+      status: 'published',
+    }).select('slug tags');
+
+    if (!currentArticle) {
+      return res.status(404).json({
+        message: 'Article not found',
+      });
+    }
+
+    const currentTags = currentArticle.tags || [];
+
+    if (currentTags.length === 0) {
+      return res.json([]);
+    }
+
+    const articles = await Article.find({
+      status: 'published',
+      slug: { $ne: slug },
+      tags: { $in: currentTags },
+    })
+      .select(
+        'title slug excerpt imageUrl likes views tags createdAt updatedAt publishedAt'
+      )
+      .limit(20)
+      .lean();
+
+    const related = articles
+      .map((article) => {
+        const articleTags = article.tags || [];
+
+        const relevance = articleTags.filter((tag) =>
+          currentTags.includes(tag)
+        ).length;
+
+        return {
+          ...article,
+          relevance,
+        };
+      })
+      .filter((article) => article.relevance > 0)
+      .sort((a, b) => {
+        if (b.relevance !== a.relevance) {
+          return b.relevance - a.relevance;
+        }
+
+        return (
+          new Date(b.updatedAt).getTime() -
+          new Date(a.updatedAt).getTime()
+        );
+      })
+      .slice(0, 3);
+
+    return res.json(related);
+  } catch (error) {
+    console.error(
+      'Erreur récupération articles associés:',
+      error
+    );
+
+    return res.status(500).json({
+      message: 'Error fetching related articles',
+    });
+  }
+};
+
+// LOGIQUE DES LIKES (Unique & Toggle)
 export const toggleLike = async (req: Request, res: Response) => {
   try {
     const { slug } = req.params;

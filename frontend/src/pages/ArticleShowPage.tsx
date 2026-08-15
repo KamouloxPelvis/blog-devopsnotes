@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { RelatedArticles } from '../components/RelatedArticles';
-import { useAllArticles } from '../hooks/useAllArticles';
+import { useRelatedArticles } from '../hooks/useRelatedArticles';
 import { Article } from '../types/articles';
 import hljs from 'highlight.js';
 import NProgress from 'nprogress';
@@ -35,9 +35,9 @@ export default function ArticleShow() {
   const { user } = useAuth();
 
   const {
-    articles: allArticles = [],
-    loading: loadingAllArticles,
-  } = useAllArticles();
+    articles: relatedArticles = [],
+    loading: loadingRelatedArticles,
+  } = useRelatedArticles(slug);
 
   const [article, setArticle] = useState<Article | null>(null);
   const [loadingArticle, setLoadingArticle] = useState(true);
@@ -815,12 +815,14 @@ export default function ArticleShow() {
           ARTICLES ASSOCIÉS
           ======================================================== */}
 
-      {!loadingAllArticles && article && (
-        <RelatedArticles
-          currentArticle={article}
-          allArticles={allArticles}
-        />
-      )}
+      {!loadingRelatedArticles &&
+        article &&
+        relatedArticles.length > 0 && (
+          <RelatedArticles
+            currentArticle={article}
+            allArticles={relatedArticles}
+          />
+        )}
 
     </div>
   );
