@@ -128,8 +128,11 @@ export default function HomePage() {
       aboutDevopsNotes:
         "Quoi de mieux que d'en parler, de documenter ce que je construis et d'échanger avec d'autres passionnés ? C'est dans cet esprit que j'ai créé DevopsNotes, un blog technique et communautaire qui m'accompagne dans mes expérimentations que je mène et qui a vocation au partage avec d'autres contributeurs.",
 
-      aboutKGuard:
-        "Parmi ces expérimentations figure notamment K-Guard, mon projet consacré à la sécurisation, à l'observabilité et à la gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes expérimentations et des problématiques que je rencontre.",
+      aboutKGuardBefore:
+        "Parmi ces expérimentations figure notamment",
+      
+      aboutKGuardAfter:
+        ", mon projet consacré à la sécurisation, à l'observabilité et à la gouvernance de clusters Kubernetes/K3s. Il évolue au fil de mes expérimentations et des problématiques que je rencontre.",
 
       sponsorTitle:
         'Soutenir le projet',
@@ -214,9 +217,12 @@ export default function HomePage() {
       aboutDevopsNotes:
         'What better way to talk about it, document what I build and exchange ideas with other enthusiasts? This is the spirit in which I created DevopsNotes, a technical and community-driven blog that accompanies me in my experiments and aims to encourage sharing with other contributors.',
 
-      aboutKGuard:
-        'Among these experiments is K-Guard, my project focused on security, observability and governance for Kubernetes/K3s clusters. It evolves alongside my experiments and the problems I encounter.',
+      aboutKGuardBefore:
+        "Among these experiments is ",
 
+      aboutKGuardAfter:
+        ", my project dedicated to the security, observability and governance of Kubernetes/K3s clusters. It evolves alongside my experiments and the challenges I encounter.",
+      
       sponsorTitle:
         'Support the project',
 
@@ -634,10 +640,20 @@ export default function HomePage() {
                 <div className="about-kguard-text">
 
                   <p>
-                    {t.aboutKGuard}
+                    {t.aboutKGuardBefore}
+                    <a
+                      href="https://github.com/KamouloxPelvis/k-guard/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      K-Guard
+                    </a>
+                    {t.aboutKGuardAfter}
                   </p>
 
-                  <p className="about-signature">
+                  <br></br>
+
+                  <p className="about-signature" style={{ fontWeight: 'bold' }}>
                     Kamal Guidadou
                   </p>
 
