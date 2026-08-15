@@ -39,7 +39,7 @@ export default function HomePage() {
 
   const content = {
     FR: {
-      title: 'DevOpsNotes — Blog DevOps, DevSecOps & Cloud',
+      title: 'Blog DevOps, DevSecOps & Cloud',
       subtitle:
         'Articles techniques, expérimentations et retours d’expérience autour du DevOps, du Cloud, de Kubernetes et de la cybersécurité.',
 
@@ -78,15 +78,13 @@ export default function HomePage() {
       repo: 'Voir le projet GitHub →',
 
       techTitle: 'Technologies & infrastructure',
-      techDescription:
-        'Le blog repose notamment sur React, TypeScript, Node.js, Express, MongoDB, Docker, Kubernetes/K3s, GitLab CI/CD, Nginx, Cloudflare et Sentry.',
 
       maintenance:
         'Des opérations de maintenance évolutive sur l’infrastructure et l’interface peuvent entraîner des indisponibilités temporaires.',
     },
 
     EN: {
-      title: 'DevOpsNotes — DevOps, DevSecOps & Cloud Blog',
+      title: 'DevOps, DevSecOps & Cloud Blog',
       subtitle:
         'Technical articles, experiments and field notes about DevOps, Cloud, Kubernetes and cybersecurity.',
 
@@ -403,8 +401,7 @@ export default function HomePage() {
             <p className="section-kicker">STACK</p>
 
             <h2>{t.techTitle}</h2>
-
-            <p>{t.techDescription}</p>
+            
           </div>
 
           <div className="landing-tech-grid">

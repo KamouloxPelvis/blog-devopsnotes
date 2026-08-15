@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Réinitialiser le mot de passe | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function ResetPassword() {
   const [searchParams] = useSearchParams();

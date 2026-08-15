@@ -2,7 +2,13 @@ import { FormEvent, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { createThread } from '../api/forum';
 import TiptapEditor from '../components/Editor'; // Import de l'éditeur riche
+import { Helmet } from 'react-helmet-async';
 import '../styles/ThreadNewPage.css';
+
+<Helmet>
+  <title>Créer un sujet | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function ThreadNewPage() {
   const [title, setTitle] = useState('');

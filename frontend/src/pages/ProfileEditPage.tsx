@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { Helmet } from 'react-helmet-async';
 import '../styles/ProfileEditPage.css';
+
+<Helmet>
+  <title>Modifier le profil | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 interface UserPayload {
   id: string;

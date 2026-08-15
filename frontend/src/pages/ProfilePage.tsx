@@ -1,6 +1,12 @@
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import '../styles/ProfilePage.css';
+
+<Helmet>
+  <title>Profil | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 interface UserPayload {
   id: string;

@@ -1,5 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
+<Helmet>
+  <title>Valider l'email | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();

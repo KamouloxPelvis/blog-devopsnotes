@@ -2,7 +2,13 @@ import { FormEvent, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { Helmet } from 'react-helmet-async';
 import '../styles/Signup.css';
+
+<Helmet>
+  <title>Connexion | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function SigninPage() {
   const navigate = useNavigate();

@@ -3,7 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../api/axios';
 import { useToast } from '../context/ToastContext';
 import ArticleForm from '../components/ArticleForm';
+import { Helmet } from 'react-helmet-async';
 import '../styles/ArticleModPage.css'
+
+<Helmet>
+  <title>Modifier l'article | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function ArticleEditPage() {
   const { slug } = useParams<{ slug: string }>();

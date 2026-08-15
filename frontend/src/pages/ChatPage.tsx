@@ -3,7 +3,13 @@ import axios from 'axios';
 import NProgress from 'nprogress';
 import { getChatSocket } from '../api/chatSocket';
 import { useAuth } from '../context/AuthContext';
+import { Helmet } from 'react-helmet-async';
 import '../styles/ChatPage.css';
+
+<Helmet>
+  <title>Chat | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 const ChatPage: React.FC = () => {
   const [messages, setMessages] = useState<any[]>([]);

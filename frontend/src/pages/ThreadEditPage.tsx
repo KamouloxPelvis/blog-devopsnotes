@@ -3,7 +3,13 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { updateThread, getThread } from '../api/forum';
 import TiptapEditor from '../components/Editor'; 
+import { Helmet } from 'react-helmet-async';
 import '../styles/ThreadNewPage.css';
+
+<Helmet>
+  <title>Modifier le sujet | DevOpsNotes</title>
+  <meta name="robots" content="noindex, nofollow" />
+</Helmet>
 
 export default function ThreadEditPage() {
   const { id } = useParams<{ id: string }>();
