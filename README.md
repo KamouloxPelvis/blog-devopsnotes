@@ -1,4 +1,4 @@
-# 🚀 DevOpsNotes : Blog Technique & Plateforme Communautaire
+# 🚀 DevopsNotes : Blog Technique & Plateforme Communautaire
 
 [ 🇫🇷 Version Française ](#-version-française) | [ 🇺🇸 English Version ](#-english-version)
 
