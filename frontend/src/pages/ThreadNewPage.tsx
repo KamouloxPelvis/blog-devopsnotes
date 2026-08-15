@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { createThread } from '../api/forum';
 import TiptapEditor from '../components/Editor'; // Import de l'éditeur riche
 import { Helmet } from 'react-helmet-async';
-import '../styles/ThreadNewPage.css';
+import '../styles/ThreadModPage.css';
 
 <Helmet>
   <title>Créer un sujet | DevOpsNotes</title>

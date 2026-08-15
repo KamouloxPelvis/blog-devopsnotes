@@ -46,16 +46,30 @@
 .articles-search {
   flex: 1;
   min-width: 120px;
-  max-width: 100%;
-  justify-content: flex-start;
+  width: 100%;
+  height: 38.19px;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--toolbar-separator);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.85rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.articles-search:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.12);
 }
 
 .articles-search-wrapper {
   flex: 1;
   display: flex;
   justify-content: flex-start;
-  margin-left: 32px;
-  margin: 2rem; 
+  margin: 0 2rem 0 32px;
 }
 
 

@@ -52,7 +52,7 @@ export default function HomePage() {
       latestTitle: 'Derniers articles',
       latestDescription:
         'Découvrez les dernières expérimentations et publications techniques de DevOpsNotes.',
-      allArticles: 'Voir tous les articles →',
+      allArticles: 'Explorez le blog',
       readArticle: "Lire l'article →",
       loading: 'Chargement des articles...',
       noArticles: 'Aucun article publié pour le moment.',
@@ -74,8 +74,8 @@ export default function HomePage() {
       aboutText2:
         "Les articles publiés sur ce blog documentent les problèmes rencontrés, les choix techniques, les solutions mises en œuvre et les expérimentations réalisées sur l'infrastructure.",
 
-      portfolio: 'Voir mon portfolio →',
-      repo: 'Voir le projet GitHub →',
+      portfolio: 'Découvrez mon portfolio',
+      repo: 'Consultez le projet GitHub',
 
       techTitle: 'Technologies & infrastructure',
 
@@ -362,7 +362,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ABOUT */}
+        {/* ABOUT & SPONSOR */}
         <section className="home-section about-section">
           <div className="about-grid">
             <div className="about-content">
@@ -373,6 +373,50 @@ export default function HomePage() {
               <p>{t.aboutText}</p>
 
               <p>{t.aboutText2}</p>
+
+              <div className="sponsor-block">
+                <h3>
+                  {lang === 'FR'
+                    ? 'Soutenir le projet'
+                    : 'Support the project'}
+                </h3>
+
+                <p>
+                  {lang === 'FR'
+                    ? "DevOpsNotes est développé et maintenu sur mon temps libre. Si vous appréciez le projet, les articles ou les expérimentations présentées ici, vous pouvez contribuer à leur poursuite via GitHub Sponsors."
+                    : "DevOpsNotes is developed and maintained in my free time. If you enjoy the project, its articles or the experiments presented here, you can help support its continued development through GitHub Sponsors."}
+                </p>
+
+                <p>
+                  {lang === 'FR'
+                    ? "Votre soutien permet notamment de continuer à développer K-Guard, expérimenter de nouvelles technologies et maintenir l'infrastructure du projet."
+                    : "Your support helps me continue developing K-Guard, experimenting with new technologies and maintaining the project's infrastructure."}
+                </p>
+
+                <div
+                  className="sponsor-card"
+                  aria-label={
+                    lang === 'FR'
+                      ? 'Soutenir DevOpsNotes via GitHub Sponsors'
+                      : 'Support DevOpsNotes through GitHub Sponsors'
+                  }
+                >
+                  <iframe
+                    src="https://github.com/sponsors/KamouloxPelvis/card"
+                    title={
+                      lang === 'FR'
+                        ? 'Soutenir KamouloxPelvis'
+                        : 'Sponsor KamouloxPelvis'
+                    }
+                    height="225"
+                    width="600"
+                    style={{
+                      border: 0,
+                      maxWidth: '100%',
+                    }}
+                  />
+                </div>
+              </div>
 
               <div className="about-actions">
                 <a

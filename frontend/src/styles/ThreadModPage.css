@@ -1,108 +1,253 @@
+/* ============================================================
+   FORMULAIRE DE SUJET — CRÉATION / MODIFICATION
+   ============================================================ */
+
 .new-thread-container {
-    max-width: 800px;
+    max-width: 960px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
+
+/* ============================================================
+   EN-TÊTE
+   ============================================================ */
 
 .form-header {
     margin-bottom: 2rem;
 }
 
 .form-header h1 {
-    font-size: 2rem;
-    color: #1a202c;
-    margin: 0.5rem 0;
+    font-size: 2.4rem;
+    color: var(--text-main, #1a202c);
+    margin: 1rem 0 0.75rem;
 }
 
 .form-header p {
-    color: #718096;
+    color: var(--text-muted, #718096);
+    font-size: 1.05rem;
+    margin: 0;
 }
 
+/* Bouton retour / annuler */
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--toolbar-separator, #e2e8f0);
+    border-radius: 8px;
+    background: var(--card-bg, #ffffff);
+    color: var(--text-main, #1a202c);
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.back-link:hover {
+    background: var(--bg-color, #f8fafc);
+    border-color: var(--primary, #8b5cf6);
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   FORMULAIRE
+   ============================================================ */
+
 .new-thread-form {
-    background: white;
-    padding: 2rem;
-    border: 1px solid #e2e8f0;
+    background: var(--card-bg, #ffffff);
+    padding: 2.5rem;
+    border: 1px solid var(--toolbar-separator, #e2e8f0);
     border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .form-group label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #4a5568;
-    font-size: 0.95rem;
-}
-
-.title-input-field, .tags-input-field, .new-thread-form textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    color: var(--text-main, #1a202c);
     font-size: 1rem;
-    transition: border-color 0.2s;
 }
 
-.title-input-field:focus, .new-thread-form textarea:focus {
-    outline: none;
-    border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+/* ============================================================
+   CHAMPS
+   ============================================================ */
+
+.title-input-field,
+.tags-input-field,
+.new-thread-form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--toolbar-separator, #e2e8f0);
+    border-radius: 8px;
+    background: var(--card-bg, #ffffff);
+    color: var(--text-main, #1a202c);
+    font-family: inherit;
+    font-size: 1rem;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
+
+.title-input-field::placeholder,
+.tags-input-field::placeholder,
+.new-thread-form textarea::placeholder {
+    color: var(--text-muted, #718096);
+}
+
+.title-input-field:focus,
+.tags-input-field:focus,
+.new-thread-form textarea:focus {
+    outline: none;
+    border-color: var(--primary, #8b5cf6);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+/* ============================================================
+   ÉDITEUR RICHE
+   ============================================================ */
 
 .editor-wrapper {
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--toolbar-separator, #e2e8f0);
     border-radius: 8px;
     overflow: hidden;
+    background: var(--card-bg, #ffffff);
 }
 
-/* On override un peu le style de la toolbar pour qu'elle s'intègre mieux ici */
+/* Toolbar */
+
 .editor-wrapper .text-toolbar {
-    border: none !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    border-radius: 0 !important;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+
     margin: 0 !important;
-    background: #f8fafc !important;
+    padding: 0.45rem !important;
+
+    border: none !important;
+    border-bottom: 1px solid var(--toolbar-separator, #e2e8f0) !important;
+    border-radius: 0 !important;
+
+    background: var(--bg-color, #f8fafc) !important;
 }
+
+/* Boutons de la toolbar */
+
+.editor-wrapper .text-toolbar button {
+    min-width: 34px;
+    min-height: 34px;
+
+    padding: 0.4rem 0.55rem;
+
+    border: none;
+    border-radius: 6px;
+
+    background: transparent;
+    color: var(--text-main, #1a202c);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.editor-wrapper .text-toolbar button:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary, #8b5cf6);
+}
+
+.editor-wrapper .text-toolbar button:active {
+    transform: scale(0.96);
+}
+
+.editor-wrapper .text-toolbar button.active {
+    background: var(--primary, #8b5cf6);
+    color: #ffffff;
+}
+
+/* Zone d'édition */
 
 .new-thread-form textarea {
+    min-height: 220px;
+
     border: none;
     border-radius: 0;
+
+    resize: vertical;
     font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
 }
+
+.new-thread-form textarea:focus {
+    border: none;
+    box-shadow: none;
+}
+
+/* ============================================================
+   APERÇU
+   ============================================================ */
 
 .thread-preview-box {
-    padding: 1rem;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e0;
-    border-radius: 8px;
     min-height: 100px;
+    padding: 1rem;
+
+    background: var(--bg-color, #f8fafc);
+    border: 1px dashed var(--toolbar-separator, #cbd5e0);
+    border-radius: 8px;
+
+    color: var(--text-main, #1a202c);
 }
+
+/* ============================================================
+   ERREURS
+   ============================================================ */
 
 .error-banner {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+
     background: #fff5f5;
     color: #c53030;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
+
     border-left: 4px solid #c53030;
+    border-radius: 8px;
 }
 
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+
 .form-actions {
-    margin-top: 2rem;
     display: flex;
     justify-content: flex-end;
+    gap: 1rem;
+
+    margin-top: 2rem;
 }
 
 .btn-lg {
     padding: 0.75rem 2rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
-/* Positionnement de la popup émoji dans le forum */
+/* ============================================================
+   EMOJI
+   ============================================================ */
+
 .forum-emoji-container {
     position: relative;
     display: inline-block;
@@ -110,25 +255,90 @@
 
 .forum-emoji-picker {
     position: absolute;
-    bottom: 40px; /* S'affiche au-dessus du bouton */
+    bottom: 45px;
     left: 0;
-    background: var(--card-bg);
-    border: 1px solid var(--toolbar-separator);
-    border-radius: 8px;
+
+    z-index: 1000;
+
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+
     padding: 8px;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--toolbar-separator, #e2e8f0);
+    border-radius: 8px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .forum-emoji-picker span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 6px;
+
     cursor: pointer;
     font-size: 1.2rem;
-    padding: 4px;
-    transition: transform 0.1s;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
 .forum-emoji-picker span:hover {
-    transform: scale(1.2);
+    background: var(--bg-color, #f8fafc);
+    transform: scale(1.15);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .new-thread-container {
+        margin: 1.5rem auto;
+        padding: 0 0.75rem;
+    }
+
+    .form-header h1 {
+        font-size: 2rem;
+    }
+
+    .new-thread-form {
+        padding: 1.5rem;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .new-thread-form {
+        padding: 1rem;
+    }
+
+    .form-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .editor-wrapper .text-toolbar {
+        gap: 0.15rem;
+    }
+
+    .editor-wrapper .text-toolbar button {
+        min-width: 30px;
+        min-height: 30px;
+        padding: 0.3rem 0.4rem;
+    }
 }
