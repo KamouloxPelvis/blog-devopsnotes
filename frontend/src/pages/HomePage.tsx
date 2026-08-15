@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useRelatedArticles } from '../hooks/useRelatedArticles';
+import { useAllArticles } from '../hooks/useAllArticles';
 import { Article } from '../types/articles';
 import '../styles/HomePage.css';
 
@@ -35,7 +35,7 @@ const getExcerpt = (article: Article): string => {
 export default function HomePage() {
   const [lang, setLang] = useState<'FR' | 'EN'>('FR');
 
-  const { articles, loading } = useRelatedArticles();
+  const { articles, loading } = useAllArticles(1, 3);
 
   const content = {
     FR: {
@@ -401,7 +401,7 @@ export default function HomePage() {
             <p className="section-kicker">STACK</p>
 
             <h2>{t.techTitle}</h2>
-
+            
           </div>
 
           <div className="landing-tech-grid">
