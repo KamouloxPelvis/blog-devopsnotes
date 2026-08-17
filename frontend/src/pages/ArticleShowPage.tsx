@@ -59,35 +59,49 @@ export default function ArticleShow() {
   useEffect(() => {
     if (!slug) return;
 
+    let isMounted = true;
     setLoadingArticle(true);
+    setError(null);
     NProgress.start();
 
+    const encodedSlug = encodeURIComponent(slug);
+
     api
-      .get(`/articles/${slug}`)
+      .get(`/articles/${encodedSlug}`)
       .then((res) => {
+        if (!isMounted) return;
         setArticle(res.data);
         setError(null);
 
-        return api.get(`/comments/${slug}`);
+        return api.get(`/comments/${encodedSlug}`);
       })
       .then((res) => {
+        if (!isMounted || !res) return;
         setComments(res.data);
       })
       .catch((err) => {
+        if (!isMounted) return;
         const isCommentError =
           err.config?.url?.includes('/comments');
 
         if (!isCommentError) {
           setError(
             err.response?.data?.message ||
-              'Article introuvable'
+              'Article introuvable ou en cours de chargement'
           );
         }
       })
       .finally(() => {
-        setLoadingArticle(false);
+        if (isMounted) {
+          setLoadingArticle(false);
+        }
         NProgress.done();
       });
+
+    return () => {
+      isMounted = false;
+      NProgress.done();
+    };
   }, [slug]);
 
   // ============================================================
@@ -249,10 +263,23 @@ export default function ArticleShow() {
   // 6. Données calculées + SEO
   // ============================================================
 
-  if (error) {
+  if (error && !article) {
     return (
-      <div className="error-msg">
-        ⚠️ {error}
+      <div className="article-detail-page page-transition fade-in-page">
+        <header className="detail-nav">
+          <Link to="/articles" className="btn btn-secondary btn-sm">
+            ← Retour aux articles
+          </Link>
+        </header>
+        <div className="error-msg" style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+          <p style={{ fontSize: '1.1rem', marginBottom: '1.2rem' }}>⚠️ {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="btn btn-primary btn-sm"
+          >
+            Actualiser la page
+          </button>
+        </div>
       </div>
     );
   }

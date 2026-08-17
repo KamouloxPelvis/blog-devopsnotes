@@ -115,3 +115,14 @@ input:focus, textarea:focus {
 .page-transition {
     animation: fadeIn 0.4s ease-out forwards;
 }
+
+@keyframes loading-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-loader {
+    background: linear-gradient(90deg, var(--bg-color) 25%, var(--toolbar-separator) 50%, var(--bg-color) 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+}
