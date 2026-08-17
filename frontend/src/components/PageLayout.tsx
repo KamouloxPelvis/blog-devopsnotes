@@ -56,7 +56,7 @@ export function PageLayout({ children }: Props) {
 
           {menuOpen && (
             <div className="dropdown-menu shadow-lg">
-              <Link to="/homepage" className="dropdown-item" onClick={() => setMenuOpen(false)}>
+              <Link to="/" className="dropdown-item" onClick={() => setMenuOpen(false)}>
                 <Home size={18} /> <span>Accueil</span>
               </Link>
               <div className="dropdown-divider" />
@@ -74,7 +74,7 @@ export function PageLayout({ children }: Props) {
         </div>
 
         {/* 2. Nouveau Logo Textuel */}
-        <Link to="/homepage" className="brand-logo">
+        <Link to="/" className="brand-logo">
           <img src={devopsLogo} alt="Logo" className="brand-icon" />
           <span className="brand-text">
             Devops<span className="brand-bold">Notes</span>
